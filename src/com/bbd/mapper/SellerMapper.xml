@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.SellerDao"> <!-- namespace对应dao中的接口 -->
+
+	<resultMap id="SellerResultMap" type="com.bbd.entity.Seller">
+		<id property="id" column="id" />
+		<result property="pwd" column="pwd" />
+		<result property="email" column="email" />
+		<result property="regisDate" column="regis_date" />
+		<result property="birthday" column="birthday" />
+		<result property="sex" column="sex" />
+		<result property="name" column="name" />
+		<result property="idCard" column="id_card" />
+		<result property="phone" column="phone" />
+		<result property="state" column="state" />
+		<result property="userPic" column="user_pic" />
+	</resultMap>
+
+	<sql id="all_item">
+		id,pwd,email,regis_date,birthday,id_card,phone,sex,state,name,user_pic
+	</sql>
+
+	<!-- 查询 -->
+	<select id="selectSellerByPrimary" parameterType="String"
+		resultType="com.bbd.entity.Seller" resultMap="SellerResultMap">
+		select
+		<include refid="all_item" />
+		from seller where id=#{id}
+	</select>
+	<select id="selectForCode" parameterType="String" resultType="com.bbd.entity.Seller"
+		resultMap="SellerResultMap">
+		select
+		id,pwd
+		from seller where id=#{id}
+	</select>
+	<!-- 插入 -->
+	<insert id="insertSeller" parameterType="com.bbd.entity.Seller">
+		insert into seller(
+		<include refid="all_item" />
+		)
+		values(#{id}, #{pwd}, #{email},
+		#{regisDate}, #{birthday}, #{idCard},
+		${phone}, #{sex}, #{state}
+		#{name},#{userPic})
+	</insert>
+	<insert id="insertForCode" parameterType="com.bbd.entity.Seller">
+		insert into seller(
+		id,pwd
+		)
+		values(#{id}, #{pwd})
+	</insert>
+	<!-- 修改 -->
+	<update id="updateSeller" parameterType="com.bbd.entity.Seller">
+		update seller set
+		birthday=#{birthday}, name=#{name}, pwd=#{pwd} where id=#{id}
+	</update>
+	<update id="updateState" parameterType="com.bbd.entity.Seller">
+		update seller set
+		state=#{state} where id=#{id}
+	</update>
+	<update id="updateForCode" parameterType="com.bbd.entity.Seller">
+		update seller set
+		pwd=#{pwd} where id=#{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="deleteForCode" parameterType="String">
+		delete from seller
+		where
+		id=#{id}
+	</delete>
+</mapper>

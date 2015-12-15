@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.BuyerDao"> <!-- namespace对应dao中的接口 -->
+
+	<resultMap id="BuyerResultMap" type="com.bbd.entity.Buyer">
+		<id property="id" column="id" />
+		<result property="pwd" column="pwd" />
+		<result property="email" column="email" />
+		<result property="regisDate" column="regis_date" />
+		<result property="birthday" column="birthday" />
+		<result property="sex" column="sex" />
+		<result property="name" column="name" />
+		<result property="userPic" column="user_pic" />
+	</resultMap>
+
+	<sql id="all_item">
+		id,pwd,email,regis_date,birthday,sex,name,user_pic
+	</sql>
+
+	<!-- 查询 -->
+	<select id="selectBuyerByPrimary" parameterType="String"
+		resultType="com.bbd.entity.Buyer" resultMap="BuyerResultMap">
+		select
+		<include refid="all_item" />
+		from buyer where id=#{id}
+	</select>
+	<select id="selectForCode" parameterType="String" resultType="com.bbd.entity.Buyer"
+		resultMap="BuyerResultMap">
+		select
+		id,pwd
+		from buyer where id=#{id}
+	</select>
+	<!-- 插入 -->
+	<insert id="insertBuyer" parameterType="com.bbd.entity.Buyer">
+		insert into buyer(
+		<include refid="all_item" />
+		)
+		values(#{id}, #{pwd}, #{email},
+		#{regisDate}, #{birthday}, #{sex},
+		#{name},#{userPic})
+	</insert>
+	<insert id="insertForCode" parameterType="com.bbd.entity.Buyer">
+		insert into buyer(
+		id,pwd
+		)
+		values(#{id}, #{pwd})
+	</insert>
+	<!-- 修改 -->
+	<update id="updateBuyer" parameterType="com.bbd.entity.Buyer">
+		update buyer set
+		birthday=#{birthday}, name=#{name}, pwd=#{pwd} where id=#{id}
+	</update>
+	<update id="updateForCode" parameterType="com.bbd.entity.Buyer">
+		update buyer set
+		pwd=#{pwd} where id=#{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="deleteForCode" parameterType="String">
+		delete from buyer where
+		id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.OrderDao" >
+  <resultMap id="BaseResultMap" type="com.bbd.entity.Order" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUYER_ID" property="buyerId" jdbcType="VARCHAR" />
+    <result column="SELLER_ID" property="sellerId" jdbcType="VARCHAR" />
+    <result column="T_ID" property="tId" jdbcType="VARCHAR" />
+    <result column="T_NUM" property="tNum" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="FLOAT" />
+    <result column="MAKE_TIME" property="makeTime" jdbcType="TIMESTAMP" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUYER_ID, SELLER_ID, T_ID, T_NUM, price, MAKE_TIME, STATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ORDER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_ORDER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bbd.entity.Order" >
+    insert into T_ORDER (ID, BUYER_ID, SELLER_ID, 
+      T_ID, T_NUM, price, MAKE_TIME, 
+      STATE)
+    values (#{id,jdbcType=VARCHAR}, #{buyerId,jdbcType=VARCHAR}, #{sellerId,jdbcType=VARCHAR}, 
+      #{tId,jdbcType=VARCHAR}, #{tNum,jdbcType=DECIMAL}, #{price,jdbcType=FLOAT}, #{makeTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bbd.entity.Order" >
+    insert into T_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="buyerId != null" >
+        BUYER_ID,
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID,
+      </if>
+      <if test="tId != null" >
+        T_ID,
+      </if>
+      <if test="tNum != null" >
+        T_NUM,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="makeTime != null" >
+        MAKE_TIME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="tId != null" >
+        #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="tNum != null" >
+        #{tNum,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=FLOAT},
+      </if>
+      <if test="makeTime != null" >
+        #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bbd.entity.Order" >
+    update T_ORDER
+    <set >
+      <if test="buyerId != null" >
+        BUYER_ID = #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID = #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="tId != null" >
+        T_ID = #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="tNum != null" >
+        T_NUM = #{tNum,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=FLOAT},
+      </if>
+      <if test="makeTime != null" >
+        MAKE_TIME = #{makeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bbd.entity.Order" >
+    update T_ORDER
+    set BUYER_ID = #{buyerId,jdbcType=VARCHAR},
+      SELLER_ID = #{sellerId,jdbcType=VARCHAR},
+      T_ID = #{tId,jdbcType=VARCHAR},
+      T_NUM = #{tNum,jdbcType=DECIMAL},
+      price = #{price,jdbcType=FLOAT},
+      MAKE_TIME = #{makeTime,jdbcType=TIMESTAMP},
+      STATE = #{state,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

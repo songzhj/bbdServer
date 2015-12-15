@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       ">
+
+
+	<!-- 使用apache的DBCP连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="system" />
+		<property name="password" value="1234" />
+
+		<!-- Connection Pooling DBCP -->
+		<property name="initialSize" value="5" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="1000" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	<!-- 这里的dataSource要与sqlSessionFactory的dataSource一致，否则事务无效 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/MyBatisConfig.xml"></property>
+	</bean>
+
+	<!-- 这里的mapperInterface需要接口类型 -->
+	<bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.UserDao" />
+	</bean>
+	<bean id="BuyerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.BuyerDao" />
+	</bean>
+	<bean id="SellerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.SellerDao" />
+	</bean>
+		<bean id="AddressMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.AddressDao" />
+	</bean>
+		<bean id="AdminMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.AdminDao" />
+	</bean>
+		<bean id="CartMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.CartDao" />
+	</bean>
+		<bean id="FavoriteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.FavoriteDao" />
+	</bean>
+		<bean id="OrderMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.OrderDao" />
+	</bean>
+		<bean id="TIndexMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.TIndexDao" />
+	</bean>
+		<bean id="TPicMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.TPicDao" />
+	</bean>
+		<bean id="TreasureMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.bbd.dao.TreasureDao" />
+	</bean>
+
+	<!-- 扫描包 -->
+	<context:component-scan base-package="com.bbd.serviceImpl" />
+	<!-- 使用注解方式的事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- Servlet调用Spring容器的配置 -->
+	<bean id="SpringContextUtil" class="com.bbd.util.SpringContextUtil" />
+</beans>

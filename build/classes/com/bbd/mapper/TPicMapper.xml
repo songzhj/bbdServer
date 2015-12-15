@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.TPicDao" >
+  <resultMap id="BaseResultMap" type="com.bbd.entity.TPic" >
+    <result column="T_ID" property="tId" jdbcType="VARCHAR" />
+    <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.bbd.entity.TPic" >
+    insert into T_PIC (T_ID, PIC_URL)
+    values (#{tId,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bbd.entity.TPic" >
+    insert into T_PIC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        T_ID,
+      </if>
+      <if test="picUrl != null" >
+        PIC_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

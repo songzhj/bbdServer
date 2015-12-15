@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.UserDao"> <!-- namespace对应dao中的接口 -->
+
+	<resultMap id="userResultMap" type="com.bbd.entity.User">
+  		<id property="userId" column="userId" />
+  		<result property="password" column="password"/>
+	</resultMap>
+
+	<!-- 查询  -->
+	<select id="selectByP" parameterType="String" resultType="com.bbd.entity.User" resultMap="userResultMap">
+		select password from user_info where userId=#{userId}
+	</select>	
+</mapper>

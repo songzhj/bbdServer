@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.AddressDao" >
+  <resultMap id="BaseResultMap" type="com.bbd.entity.Address" >
+    <id column="ADDR_ID" property="addrId" jdbcType="VARCHAR" />
+    <result column="SELLER_ID" property="sellerId" jdbcType="VARCHAR" />
+    <result column="ADDR" property="addr" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ADDR_ID, SELLER_ID, ADDR, PHONE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ADDRESS
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ADDRESS
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bbd.entity.Address" >
+    insert into ADDRESS (ADDR_ID, SELLER_ID, ADDR, 
+      PHONE)
+    values (#{addrId,jdbcType=VARCHAR}, #{sellerId,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bbd.entity.Address" >
+    insert into ADDRESS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="addrId != null" >
+        ADDR_ID,
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID,
+      </if>
+      <if test="addr != null" >
+        ADDR,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="addrId != null" >
+        #{addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bbd.entity.Address" >
+    update ADDRESS
+    <set >
+      <if test="sellerId != null" >
+        SELLER_ID = #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        ADDR = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bbd.entity.Address" >
+    update ADDRESS
+    set SELLER_ID = #{sellerId,jdbcType=VARCHAR},
+      ADDR = #{addr,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR}
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+</mapper>

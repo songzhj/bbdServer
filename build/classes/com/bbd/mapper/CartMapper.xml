@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbd.dao.CartDao" >
+  <resultMap id="BaseResultMap" type="com.bbd.entity.Cart" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TREASURE_ID" property="treasureId" jdbcType="VARCHAR" />
+    <result column="TREASURE_NUM" property="treasureNum" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.bbd.entity.Cart" >
+    insert into CART (ID, TREASURE_ID, TREASURE_NUM
+      )
+    values (#{id,jdbcType=VARCHAR}, #{treasureId,jdbcType=VARCHAR}, #{treasureNum,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bbd.entity.Cart" >
+    insert into CART
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="treasureId != null" >
+        TREASURE_ID,
+      </if>
+      <if test="treasureNum != null" >
+        TREASURE_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="treasureId != null" >
+        #{treasureId,jdbcType=VARCHAR},
+      </if>
+      <if test="treasureNum != null" >
+        #{treasureNum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>
