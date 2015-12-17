@@ -6,6 +6,10 @@
     <result column="T_NAME" property="tName" jdbcType="VARCHAR" />
     <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="all">t_id,t_name,pic_url</sql>
+  <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
+  	select <include refid="all"/> from T_INDEX where upper(t_name) like '%'||upper(name)||'%'
+  </select>
   <insert id="insert" parameterType="com.bbd.entity.TIndex" >
     insert into T_INDEX (T_ID, T_NAME, PIC_URL
       )

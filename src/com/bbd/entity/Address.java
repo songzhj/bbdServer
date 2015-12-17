@@ -3,7 +3,7 @@ package com.bbd.entity;
 public class Address {
     private String addrId;
 
-    private String sellerId;
+    private String sellerId; //应为buyerId, 项目进行到中间时才发现.故没有更正.
 
     private String addr;
 

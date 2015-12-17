@@ -5,6 +5,10 @@
     <result column="T_ID" property="tId" jdbcType="VARCHAR" />
     <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="all">T_ID,PIC_URL</sql>
+  <select id="selectByTId" parameterType="String" resultMap="BaseResultMap">
+  	select <include refid="all"/> from T_PIC where T_ID = #{id}
+  </select>
   <insert id="insert" parameterType="com.bbd.entity.TPic" >
     insert into T_PIC (T_ID, PIC_URL)
     values (#{tId,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR})

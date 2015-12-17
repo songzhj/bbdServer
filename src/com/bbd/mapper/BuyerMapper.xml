@@ -54,6 +54,10 @@
 		update buyer set
 		pwd=#{pwd} where id=#{id}
 	</update>
+	<update id="updatePwd" parameterType="com.bbd.entity.Buyer">
+		update buyer set
+		pwd=#{pwd}
+	</update>
 	<!-- 删除 -->
 	<delete id="deleteForCode" parameterType="String">
 		delete from buyer where

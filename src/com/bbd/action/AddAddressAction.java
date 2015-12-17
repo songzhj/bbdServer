@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bbd.service.TreasureService;
-import com.bbd.serviceImpl.TreasureServiceImpl;
+import com.bbd.service.BuyerService;
+import com.bbd.serviceImpl.BuyerServiceImpl;
 import com.bbd.util.SpringContextUtil;
 
 /**
- * Servlet implementation class PublishTreasure
+ * Servlet implementation class AddAddressAction
  */
-@WebServlet("/publish_treasure")
-public class PublishTreasure extends HttpServlet {
+@WebServlet("/add_address_action")
+public class AddAddressAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PublishTreasure() {
+	public AddAddressAction() {
 		super();
 	}
 
@@ -33,7 +33,7 @@ public class PublishTreasure extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		returnData("Can not access !", response);
 	}
 
 	/**
@@ -42,15 +42,14 @@ public class PublishTreasure extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		TreasureService treasureServiceImpl = (TreasureServiceImpl) SpringContextUtil
-				.getBean("treasureServiceImpl");
-		String data = request.getParameter("data");
-		int isSuccess = treasureServiceImpl.publishTreasure(data);
-		retunData("" + isSuccess, response);
+
+		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
+				.getBean("buyerServiceImpl");
+		int isSuccess = buyerServiceImpl.addAddress(request);
+		returnData(isSuccess + "", response);
 	}
 
-	private void retunData(String data, HttpServletResponse response) throws IOException {
+	private void returnData(String data, HttpServletResponse response) throws IOException {
 		Writer out = response.getWriter();
 		out.write(data);
 		out.close();

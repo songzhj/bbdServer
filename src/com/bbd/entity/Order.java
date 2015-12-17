@@ -19,6 +19,8 @@ public class Order {
     private Date makeTime;
 
     private String state;
+    
+    private String addrId;
 
     public String getId() {
         return id;
@@ -82,5 +84,13 @@ public class Order {
 
     public void setState(String state) {
         this.state = state == null ? null : state.trim();
+    }
+    
+    public String getAddrId() {
+        return addrId;
+    }
+
+    public void setAddrId(String addrId) {
+        this.addrId = addrId == null ? null : addrId.trim();
     }
 }

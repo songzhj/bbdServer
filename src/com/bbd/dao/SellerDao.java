@@ -11,4 +11,5 @@ public interface SellerDao {
 	int deleteForCode(String id);
 	void updateForCode(Seller seller);
 	void updateState(Seller seller);
+	void updatePwd(Seller seller);
 }

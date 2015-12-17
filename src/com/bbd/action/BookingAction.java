@@ -3,31 +3,28 @@ package com.bbd.action;
 import java.io.IOException;
 import java.io.Writer;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bbd.service.CommonService;
-import com.bbd.serviceImpl.CommonServiceImpl;
+import com.bbd.service.BuyerService;
+import com.bbd.serviceImpl.BuyerServiceImpl;
 import com.bbd.util.SpringContextUtil;
 
 /**
- * Servlet implementation class RetrievePassword
+ * Servlet implementation class BookingAction
  */
-@WebServlet("/retrieve_password")
-public class RetrievePassword extends HttpServlet {
+@WebServlet("/booking_action")
+public class BookingAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public RetrievePassword() {
+	public BookingAction() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -46,22 +43,17 @@ public class RetrievePassword extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		CommonService commonServiceImpl = (CommonServiceImpl) SpringContextUtil
-				.getBean("commonServiceImpl");
-		String id = request.getParameter("id");
-		String email = request.getParameter("email");
-		try {
-			Integer data = commonServiceImpl.retrievePassword(id, email);
-			returnData(data.toString(), response);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-			e.printStackTrace();
-		}
+		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
+				.getBean("buyerServiceImpl");
+		String data = request.getParameter("data");
+		int isSuccess = buyerServiceImpl.booking(data);
+		returnData(isSuccess + "", response);
 	}
 
-	private void returnData(String data, HttpServletResponse response)
-			throws IOException {
+	private void returnData(String data, HttpServletResponse response) throws IOException {
 		Writer out = response.getWriter();
 		out.write(data);
+		out.close();
 	}
+
 }

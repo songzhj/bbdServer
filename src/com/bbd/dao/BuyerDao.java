@@ -10,4 +10,5 @@ public interface BuyerDao {
 	int insertForCode(Buyer buyer);
 	int deleteForCode(String id);
 	void updateForCode(Buyer buyer);
+	void updatePwd(Buyer buyer);
 }

@@ -16,6 +16,12 @@
     from ADDRESS
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByBuyerId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ADDRESS
+    where SELLER_ID = #{sellerId,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from ADDRESS
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
