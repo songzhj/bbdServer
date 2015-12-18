@@ -40,10 +40,6 @@
 	</bean>
 
 	<!-- 这里的mapperInterface需要接口类型 -->
-	<bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="mapperInterface" value="com.bbd.dao.UserDao" />
-	</bean>
 	<bean id="BuyerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.BuyerDao" />
@@ -52,35 +48,35 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.SellerDao" />
 	</bean>
-		<bean id="AddressMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="AddressMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.AddressDao" />
 	</bean>
-		<bean id="AdminMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="AdminMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.AdminDao" />
 	</bean>
-		<bean id="CartMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="CartMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.CartDao" />
 	</bean>
-		<bean id="FavoriteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="FavoriteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.FavoriteDao" />
 	</bean>
-		<bean id="OrderMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="OrderMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.OrderDao" />
 	</bean>
-		<bean id="TIndexMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="TIndexMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.TIndexDao" />
 	</bean>
-		<bean id="TPicMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="TPicMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.TPicDao" />
 	</bean>
-		<bean id="TreasureMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="TreasureMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.bbd.dao.TreasureDao" />
 	</bean>

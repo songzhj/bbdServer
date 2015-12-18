@@ -1,31 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bbd.dao.FavoriteDao" >
-  <resultMap id="BaseResultMap" type="com.bbd.entity.Favorite" >
-    <result column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="TREASURE_ID" property="treasureId" jdbcType="VARCHAR" />
-  </resultMap>
-  <insert id="insert" parameterType="com.bbd.entity.Favorite" >
-    insert into FAVORITE (ID, TREASURE_ID)
-    values (#{id,jdbcType=VARCHAR}, #{treasureId,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.bbd.entity.Favorite" >
-    insert into FAVORITE
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="treasureId != null" >
-        TREASURE_ID,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="treasureId != null" >
-        #{treasureId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+<mapper namespace="com.bbd.dao.FavoriteDao">
+	<resultMap id="BaseResultMap" type="com.bbd.entity.Favorite">
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="TREASURE_ID" property="treasureId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="all">ID,TREASURE_ID</sql>
+	<select id="selectByFavorite" parameterType="com.bbd.entity.Favorite"
+		resultMap="BaseResultMap">
+		select
+		<include refid="all" />
+		from FAVORITE where TREASURE_ID=#{treasureId} and ID=#{id}
+	</select>
+	<select id="selectById" parameterType="com.bbd.entity.Favorite"
+		resultMap="BaseResultMap">
+		select
+		<include refid="all" />
+		from FAVORITE where ID=#{id}
+	</select>
+	<insert id="insert" parameterType="com.bbd.entity.Favorite">
+		insert into FAVORITE (ID,
+		TREASURE_ID)
+		values (#{id,jdbcType=VARCHAR},
+		#{treasureId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.bbd.entity.Favorite">
+		insert into FAVORITE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="treasureId != null">
+				TREASURE_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="treasureId != null">
+				#{treasureId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<delete id="deleteByFavorite" parameterType="com.bbd.entity.Favorite">
+		delete from
+		FAVORITE
+		where ID
+		= #{id,jdbcType=VARCHAR} and TREASURE_ID =
+		#{treasureId,jdbcType=VARCHAR}
+	</delete>
 </mapper>

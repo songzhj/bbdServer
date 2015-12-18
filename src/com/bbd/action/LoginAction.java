@@ -111,11 +111,11 @@ public class LoginAction extends HttpServlet {
 	private void buyerLogin(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
-		BuyerService buyerService = (BuyerServiceImpl) SpringContextUtil
+		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
-		String data = buyerService.login(id, pwd);
+		String data = buyerServiceImpl.login(id, pwd);
 		returnData(data, response);
 	}
 
