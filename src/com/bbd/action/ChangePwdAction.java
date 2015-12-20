@@ -40,7 +40,8 @@ public class ChangePwdAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userType = request.getParameter("user_type");
+		String userType = (String)request.getSession().getAttribute("userType");
+		if (userType == null) userType = "null";
 		switch (userType) {
 		case "buyer":
 			changeBuyerPwd(request, response);
@@ -49,7 +50,7 @@ public class ChangePwdAction extends HttpServlet {
 			changeSellerPwd(request, response);
 			break;
 		default:
-			
+			returnData(userType, response);
 			break;
 		}
 	}
@@ -58,7 +59,7 @@ public class ChangePwdAction extends HttpServlet {
 			HttpServletResponse response) throws IOException {
 
 		SellerService sellerServiceImpl = (SellerServiceImpl) SpringContextUtil.getBean("sellerServiceImpl");
-		String id = request.getParameter("id");
+		String id = (String) request.getSession().getAttribute("id");
 		String pwd = request.getParameter("pwd");
 		String newPwd = request.getParameter("new _pwd");
 		int data = sellerServiceImpl.changePwd(id, pwd, newPwd);
@@ -69,7 +70,7 @@ public class ChangePwdAction extends HttpServlet {
 			HttpServletResponse response) throws IOException {
 		
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil.getBean("buyerServiceImpl");
-		String id = request.getParameter("id");
+		String id = (String) request.getSession().getAttribute("id");
 		String pwd = request.getParameter("pwd");
 		String newPwd = request.getParameter("new _pwd");
 		int data = buyerServiceImpl.changePwd(id, pwd, newPwd);

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百宝袋</title>
+	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<script type="text/javascript" src="tools/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#edit").click(function(){
+			$(".edit_able").removeAttr("readonly");
+			$(".gender input").removeAttr("disabled");
+			$(".edit_able").css({"border":"1px solid #a1a1a1"});
+			$(".save").css({"display":"block"});
+		});
+		$.ajax({
+		    type:'POST',
+		    url:"http://bbd.songzhj.com/get_user_info_action",
+		    dataType:"json",
+		    success: function (data) {
+ 		        $("#b_id").value = data.id;
+		        $("#b_name").value = data.name;
+		        $("#birthday").value = data.birthday;
+		        if (data.sex == "b") {
+		        	#("#b_boy").attr("checked",true);
+		        } else if (data.sex == "g"){
+		        	#("#b_girl").attr("checked",true);
+		        }
+		    },
+		    error:function() {
+		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+		    }
+		});
+	});
+	$(document).ready(function(){
+		$(".save").click(function(){
+			$(".edit_able").attr("readonly","readonly");
+			$(".gender input").attr("disabled","disabled");
+			$(".edit_able").css({"border":"hidden"});
+			$(".save").css({"display":"none"});
+			saveInfo();
+		});
+	});
+	function saveInfo() {
+		var name = $("#b_name").value;
+		var birthday = $("#b_birthday").value;
+		var sex;
+		if ($("#b_boy").attr("checked") == true) {
+			sex = "b";
+		} else {
+			sex = girl;
+		}
+		var jsonData = "{name:" + name + ",birthday:" + birthday + ",sex:" + sex + "}";
+		$.ajax({
+		    type:'POST',
+		    url:"http://bbd.songzhj.com/update_user_info_action",
+		    dataType:"json",
+		    data:jsonData,
+		    success: function (data) {
+		    	if (data == 1) {
+		    		alert("修改成功!");
+		    	} else {
+		    		alert("修改失败!");
+		    	}  	
+		    },
+		    error:function() {
+		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+		    }
+		});
+	}
+	</script>
+</head>
+<body>
+	<div classs="container">
+		<div class="header"></div>
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+						<div class="side_list">
+			<div class="side_block">
+				<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+					<div class="item_title"><a href="">账号管理</a></div>
+					<div class="sub_item">
+						<ul>
+							<li><a href="">个人资料</a></li>
+							<li><a href="">修改密码</a></li>
+							<li><a href="">收货地址</a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+					<div class="item_title"><a href="">交易管理</a></div>
+					<div class="sub_item">
+						<ul>
+							<li><a href="">待付款</a></li>
+							<li><a href="">待收货</a></li>
+							<li><a href="">待评价</a></li>
+							<li><a href="">退货中</a></li>
+							<li><a href="">已完成</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+				</div>
+					<div class="col-md-8 col-lg-8" >
+						<div>
+							<div>
+								<p class="right_top">
+									<span>个人资料</span>
+									<span><button id="edit">编辑</button></span>
+									<span><button id="logout">注销</button></span>
+								</p>
+							</div>
+							<div>
+								<form>
+									<table class="person_data">
+										<tr>
+											<th>ID：</th>
+											<td><input type="text" name="" id="b_ID" value="" readOnly="true"></td>
+										</tr>
+										<tr>
+											<th>真实姓名：</th>
+											<td><input  class="edit_able" type="text" name="" id="b_name" value="" readOnly="true"></td>
+										</tr>
+										<tr>
+											<th>性别：</th>
+											<td class="gender"><input type="radio" name="sexgroup" id="b_boy" value="b" disabled="disabled">男 ♂
+											<input type="radio" name="sexgroup" id="b_girl" value="g" disabled="disabled">女 ♀</td>
+										</tr>
+										
+										<tr>
+											<th>生日：</th>
+											<td><input  class="edit_able" type="text" name="" id="b_birthday" value="" readOnly="true"></td>
+										</tr>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div>
+							<button type="button" class="save">保存</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(".header").load("head.html")
+</script>
+</body>
+</html>

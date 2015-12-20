@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bbd.service.BuyerService;
 import com.bbd.service.SellerService;
@@ -45,7 +46,9 @@ public class GetUserInfoAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		String userType = request.getParameter("user_type");
+		HttpSession session = request.getSession();
+		String userType = (String) session.getAttribute("userType");
+		if (userType == null) return;
 		switch (userType) {
 		case "buyer":
 			getBuyerInfo(request, response);
@@ -64,7 +67,8 @@ public class GetUserInfoAction extends HttpServlet {
 
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
-		String id = request.getParameter("id");
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) return;
 		String data = buyerServiceImpl.getInfo(id);
 		returnData(data, response);
 	}
@@ -74,8 +78,9 @@ public class GetUserInfoAction extends HttpServlet {
 
 		SellerService sellerService = (SellerServiceImpl) SpringContextUtil
 				.getBean("sellerServiceImpl");
-		String id = request.getParameter("id");
-		String data = sellerService.getIndo(id);
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) return;
+		String data = sellerService.getIndo(id); //info, 手误了....
 		returnData(data, response);
 	}
 

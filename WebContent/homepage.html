@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百宝袋</title>
+	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<script type="text/javascript" src="tools/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header"></div>
+		
+		<div class="container">
+			<div class="content col-md-12 col-lg-12">
+				
+				<p>dhjshdksj</p>
+
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(".header").load("head.html")
+	$(document).ready(function() {
+		$.ajax({
+		    type:'POST',
+		    url:"http://bbd.songzhj.com/index_action",
+		    dataType:"text",
+		    success: function (data) {
+		    	if (data != "null") {
+		    		$("#register").html("");
+		    		$("#login").html("");
+		    		$("#name").html("欢迎," + data);
+		    		//我的主页链接更改
+		    	}
+/* 	    		$("#register").html("");
+	    		$("#login").html("");
+		    	$("#name").html("欢迎，" + "丁宝宝"); */
+		    },
+		    error:function() {
+		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+		    }
+		});
+	});
+	function toHome() {
+			$.ajax({
+			    type:'POST',
+			    url:"http://bbd.songzhj.com/get_user_type",
+			    dataType:"text",
+			    success: function (data) {
+			    	alert(data);
+			    	if (data == "buyer") {
+			    		location.href = "http://bbd.songzhj.com/buyer_homepage.html";
+			    	} else if (data == "seller") {
+			    		location.href = "http://bbd.songzhj.com/seller_homepage.html";
+			    	}
+			    },
+			    error:function() {
+			    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+			    }
+			});
+	}
+	</script>
+</body>
+</html>

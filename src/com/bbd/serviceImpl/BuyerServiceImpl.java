@@ -169,8 +169,9 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public int updateInfo(HttpServletRequest request) {
 		try {
-			Buyer buyer = buyerDao.selectBuyerByPrimary(request
-					.getParameter("id"));
+			String id = (String)request.getSession().getAttribute("id");
+			if (id == null) id = "null";
+			Buyer buyer = buyerDao.selectBuyerByPrimary(id);
 			buyer.setName(request.getParameter("name"));
 			buyer.setSex(request.getParameter("sex"));
 			buyer.setBirthday(Date.valueOf(request.getParameter("birthday")));

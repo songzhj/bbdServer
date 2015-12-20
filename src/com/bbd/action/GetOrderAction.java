@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 import com.bbd.service.BuyerService;
 import com.bbd.service.SellerService;
@@ -40,9 +43,10 @@ public class GetOrderAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userType = request.getParameter("user_type");
 		String state = request.getParameter("order_state");
-		String userId = request.getParameter("id");
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("id");
+		String userType = (String) session.getAttribute("userType");
 		switch (userType) {
 		case "buyer":
 			getBuyerOrder(userId, state, response);

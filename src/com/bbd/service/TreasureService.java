@@ -5,4 +5,5 @@ public interface TreasureService {
 	int removeTreasure(String tid);
 	String searchTreasure(String context);
 	String getDetails(String id);
+	String getTreasures(String id);
 }

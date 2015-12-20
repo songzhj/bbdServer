@@ -8,11 +8,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -102,7 +104,10 @@ public class LoginAction extends HttpServlet {
 
 		SellerService sellerService = (SellerServiceImpl) SpringContextUtil
 				.getBean("sellerServiceImpl");
+		HttpSession session = request.getSession();
 		String id = request.getParameter("id");
+		session.setAttribute("id", id);
+		session.setAttribute("userType", "seller");
 		String pwd = request.getParameter("pwd");
 		String data = sellerService.login(id, pwd);
 		returnData(data, response);
@@ -113,7 +118,10 @@ public class LoginAction extends HttpServlet {
 
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
+		HttpSession session = request.getSession();
 		String id = request.getParameter("id");
+		session.setAttribute("id", id);
+		session.setAttribute("userType", "buyer");
 		String pwd = request.getParameter("pwd");
 		String data = buyerServiceImpl.login(id, pwd);
 		returnData(data, response);
@@ -124,6 +132,6 @@ public class LoginAction extends HttpServlet {
 		Writer out = response.getWriter();
 		out.write(data);
 		out.close();
-	}
+	}	
 
 }

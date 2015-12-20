@@ -92,8 +92,9 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public int updateInfo(HttpServletRequest request) {
 		try {
-			Seller seller = sellerDao.selectSellerByPrimary(request
-					.getParameter("id"));
+			String id = (String)request.getSession().getAttribute("id");
+			if (id == null) id = "null";
+			Seller seller = sellerDao.selectSellerByPrimary(id);
 			seller.setName(request.getParameter("name"));
 			seller.setSex(request.getParameter("sex"));
 			seller.setBirthday(Date.valueOf(request.getParameter("birthday")));

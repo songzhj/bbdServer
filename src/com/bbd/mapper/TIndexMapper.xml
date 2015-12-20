@@ -10,6 +10,9 @@
   <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
   	select <include refid="all"/> from T_INDEX where upper(t_name) like '%'||upper(name)||'%'
   </select>
+  <select id="selectById" parameterType="String" resultMap="BaseResultMap">
+  	select <include refid="all"/> from T_INDEX where T_ID = #{id,jdbcType=VARCHAR}
+  </select>
   <insert id="insert" parameterType="com.bbd.entity.TIndex" >
     insert into T_INDEX (T_ID, T_NAME, PIC_URL
       )

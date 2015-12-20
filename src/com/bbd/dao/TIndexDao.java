@@ -10,4 +10,6 @@ public interface TIndexDao {
     int insertSelective(TIndex record);
     
     List<TIndex> selectByName(String name);
+    
+    TIndex selectById(String id);
 }

@@ -1,5 +1,7 @@
 package com.bbd.dao;
 
+import java.util.List;
+
 import com.bbd.entity.Treasure;
 
 public interface TreasureDao {
@@ -14,4 +16,6 @@ public interface TreasureDao {
     int updateByPrimaryKeySelective(Treasure record);
 
     int updateByPrimaryKey(Treasure record);
+
+	List<Treasure> selectBySellerId(String sellerId);
 }

@@ -34,7 +34,6 @@
  	 	</environment>
 	</environments> -->
 	<mappers>
-  		<mapper resource="com/bbd/mapper/UserMapper.xml"/>
   		<mapper resource="com/bbd/mapper/BuyerMapper.xml"/>
   		<mapper resource="com/bbd/mapper/SellerMapper.xml"/>
   		<mapper resource="com/bbd/mapper/AddressMapper.xml"/>

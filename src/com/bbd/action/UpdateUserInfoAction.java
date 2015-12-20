@@ -41,7 +41,8 @@ public class UpdateUserInfoAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userType = request.getParameter("user_type");
+		String userType = (String) request.getSession().getAttribute("userType");
+		if (userType == null) userType = "null";
 		switch (userType) {
 		case "buyer":
 			updateBuyerInfo(request, response);

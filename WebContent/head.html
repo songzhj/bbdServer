@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	
+	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+	<style type="text/css">
+	#top{
+		background-color: #d7d7d7;
+		border-bottom: none;	
+	}
+	
+	#log_link{
+		font-weight: bold;
+		font-size: 170%;
+		color:#0cf;
+		margin-left: 10px;
+		text-align: center;
+		
+	}
+	.search_button{
+		background-color: #36f;
+		color: #fff;
+	}
+	.search{
+		margin-top: 80px
+
+	}
+	.logo{
+		position: absolute;
+	}
+	.logo_search{
+		position: absolute;
+		top:70px;
+		
+	}
+
+	</style>
+	
+</head>
+<body>
+	<div class="container">
+		<!--导航-->
+		<div class="navbar-wrapper">
+			<div class="container">
+				<nav class="navbar navbar-default navbar-fixed-top " id="top" role="navigation" >
+					<div class="container">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#">欢迎来到百宝袋！</a>
+						</div>
+						
+						<div class="navbar-right">
+							<ul class="nav navbar-nav">
+								<li><a data-toggle="modal"><span id="name"></span></a></li>
+								<li><a data-toggle="modal"><span id="register">注册</span></a></li>
+								<li><a data-toggle="modal"><span id="login">登录</span></a></li>
+								<li><a onclick="toHome()" data-toggle="modal">我的主页</a></li>
+							</ul>
+						</div>
+						
+					</div>
+				</nav>
+				
+
+			
+		</div>
+		<!-- logo和搜索框 -->
+		<div class="container logo_search">
+			
+				<div class="row">
+					<div class="col-md-3 col-lg-3 logo" >
+						<img class="img-responsive" src="pic/logo.png" >
+						<span ><a id="log_link" href="">bbd.songzhj.com</a></span>
+					</div>
+				</div>
+				
+			
+			<div class="search">
+					<div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+						<div class="input-group">
+							<input type="text" class="form-control">
+							<span class="input-group-btn">
+								<button class="btn btn-default search_button" type="button">
+									搜索
+								</button>
+							</span>
+						</div><!-- /input-group -->
+					</div><!-- /.col-lg-6 -->
+			</div>			
+		</div>
+	</div>
+</div>
+</body>
+</html>

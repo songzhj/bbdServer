@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百宝袋</title>
+	
+	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<script type="text/javascript" src="tools/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+	
+	<div class="container">
+		<div class="header"></div>
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+						<div class="side_list">
+							<div class="side_block">
+								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+									<div class="item_title"><a href="">账号管理</a></div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="">个人资料</a></li>
+											<li><a href="">修改密码</a></li>
+											<li><a href="">收货地址</a></li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+									<div class="item_title"><a href="">交易管理</a></div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="">待付款</a></li>
+											<li><a href="">待收货</a></li>
+											<li><a href="">待评价</a></li>
+											<li><a href="">退货中</a></li>
+											<li><a href="">已完成</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8 col-lg-8" >
+						<p class="right_top">
+							<span>修改密码</span>
+						</p>
+
+						<div>
+							<form>
+								<table class="password">
+									<tr>
+										<th>ID：</th>
+										<td><input type="text" name="" id="s_ID" value="" readOnly="true" style="border:hidden"></td>
+									</tr>
+									<tr>
+										<th>请输入密码：</th>
+										<td><input type="password" name="" id="pwd" value="" /> </td>
+										<td><a href="#" ><small> 忘记密码?</small></a> </td>
+										</tr>
+										<tr>
+											<th>请输入新密码：</th>
+											<td><input type="password" name="" id="new_pwd" value="" /></td>
+										</tr>
+										<tr>
+											<th>确认密码：</th>
+											<td><input type="password" name="" id="new_pwd2" value="" /></td>
+										</tr>
+									</table>
+								</form>
+
+							</div>
+							<input id="set_password" type="button" name="" onclick="update()" value="确认" />
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+<script type="text/javascript">
+$(".header").load("head.html")
+function update() {
+	var pwd = $("#pwd").value;
+	var newPwd = $("#new_pwd").value;
+	var jsonData = "{pwd:" + pwd + ",new_pwd:" + newPwd + "}";
+	$.ajax({
+	    type:'POST',
+	    url:"http://bbd.songzhj.com/change_pwd_action",
+	    dataType:"json",
+	    data:jsonData,
+	    success: function (data) {
+	    	if (data == 1) {
+	    		alert("修改成功!");
+	    	} else {
+	    		alert("修改失败!");
+	    	}
+	    },
+	    error:function() {
+	    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+	    }
+	});
+}
+</script>
+</body>
+</html>

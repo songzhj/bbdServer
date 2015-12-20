@@ -177,5 +177,22 @@ public class TreasureServiceImpl implements TreasureService{
 		}
 		return arr;
 	}
+
+	@Override
+	public String getTreasures(String sellerId) {
+		List<Treasure> list = treasureDao.selectBySellerId(sellerId);
+		JSONObject data = new JSONObject();
+		JSONArray arr = new JSONArray();
+		for (Treasure t : list) {
+			JSONObject o = new JSONObject();
+			o.put("t_id", t.getId());
+			o.put("name", t.getName());
+			o.put("price", t.getPrice());
+			o.put("t_pic", tIndexDao.selectById(t.getId()).getPicUrl());
+			arr.put(o);
+		}
+		data.put("treasures", arr);
+		return data.toString();
+	}
 	
 }
