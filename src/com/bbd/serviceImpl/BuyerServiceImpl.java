@@ -97,12 +97,12 @@ public class BuyerServiceImpl implements BuyerService {
 	}
 
 	@Override
-	public int booking(String data) {
+	public int booking(String data, String id) {
 		JSONObject json = new JSONObject(data);
 		JSONArray arr = json.getJSONArray("data");
 		for (int i = 0; i < arr.length(); ++i) { // 一组订单
 			JSONObject jsonObj = (JSONObject) arr.get(i);
-			int r = booking(jsonObj);
+			int r = booking(jsonObj, id);
 			if (r == 0) {
 				return 0;
 			}
@@ -116,9 +116,9 @@ public class BuyerServiceImpl implements BuyerService {
 	 * @param jsonObj
 	 * @return
 	 */
-	private int booking(JSONObject jsonObj) {
+	private int booking(JSONObject jsonObj, String id) {
 		Order order = new Order();
-		order = setOrder(jsonObj, order);
+		order = setOrder(jsonObj, order, id);
 		if (order == null)
 			return 0;
 		orderDao.insert(order);
@@ -132,8 +132,8 @@ public class BuyerServiceImpl implements BuyerService {
 	 * @param order
 	 * @return
 	 */
-	private Order setOrder(JSONObject jsonObj, Order order) {
-		order.setBuyerId(jsonObj.getString("buyer_id"));
+	private Order setOrder(JSONObject jsonObj, Order order, String id) {
+		order.setBuyerId(id);
 		order.settId(jsonObj.getString("t_id"));
 		order.settNum(jsonObj.getBigDecimal("t_num"));
 		order.setAddrId(jsonObj.getString("addr_id"));

@@ -46,7 +46,9 @@ public class BookingAction extends HttpServlet {
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
 		String data = request.getParameter("data");
-		int isSuccess = buyerServiceImpl.booking(data);
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) id = "null";
+		int isSuccess = buyerServiceImpl.booking(data, id);
 		returnData(isSuccess + "", response);
 	}
 

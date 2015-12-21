@@ -1,6 +1,7 @@
 package com.bbd.serviceImpl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -189,9 +190,11 @@ public class TreasureServiceImpl implements TreasureService{
 			o.put("name", t.getName());
 			o.put("price", t.getPrice());
 			o.put("t_pic", tIndexDao.selectById(t.getId()).getPicUrl());
+			o.put("num", t.getNum());
 			arr.put(o);
 		}
 		data.put("treasures", arr);
+		System.out.println(data.toString());
 		return data.toString();
 	}
 	

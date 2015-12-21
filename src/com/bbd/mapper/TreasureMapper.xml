@@ -11,11 +11,10 @@
 		<result column="COLOR" property="color" jdbcType="VARCHAR" />
 		<result column="NUM" property="num" jdbcType="DECIMAL" />
 		<result column="DESCRIBE" property="describe" jdbcType="VARCHAR" />
-		<result column="SIZE" property="size" jdbcType="VARCHAR" />
+		<result column="T_SIZE" property="size" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		ID, NAME, PRICE, SELLER_ID, SEX, BRAND, COLOR, NUM,
-		DESCRIBE, SIZE
+		ID,NAME,PRICE,SELLER_ID,SEX,BRAND,COLOR,NUM,DESCRIBE,T_SIZE
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -28,8 +27,7 @@
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from TREASURE
-		where SELLER_ID = #{sellerId,jdbcType=VARCHAR}
+		from TREASURE where SELLER_ID=#{sellerId,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from
@@ -40,7 +38,7 @@
 		insert into TREASURE (ID,
 		NAME, PRICE,
 		SELLER_ID, SEX, BRAND,
-		COLOR, NUM, DESCRIBE, SIZE
+		COLOR, NUM, DESCRIBE, T_SIZE
 		)
 		values
 		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
@@ -82,7 +80,7 @@
 				DESCRIBE,
 			</if>
 			<if test="size != null">
-				SIZE,
+				T_SIZE,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -146,7 +144,7 @@
 				DESCRIBE = #{describe,jdbcType=VARCHAR},
 			</if>
 			<if test="size != null">
-				SIZE = #{size,jdbcType=VARCHAR}
+				T_SIZE = #{size,jdbcType=VARCHAR}
 			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
@@ -164,8 +162,10 @@
 		NUM = #{num,jdbcType=DECIMAL},
 		DESCRIBE =
 		#{describe,jdbcType=VARCHAR},
-		SIZE = 
+		T_SIZE =
 		#{size,jdbcType=VARCHAR}
-		where ID = #{id,jdbcType=VARCHAR}
+		where ID
+		=
+		#{id,jdbcType=VARCHAR}
 	</update>
 </mapper>

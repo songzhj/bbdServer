@@ -42,6 +42,7 @@ public class GetTreasureAction extends HttpServlet {
 		String id = (String) request.getSession().getAttribute("id");
 		if (id == null) id = "null";
 		String data = treasureServiceImpl.getTreasures(id);
+//		data = "{treasures:[{t_id:'123123', name:'这是一件商品', price:'123.3',t_pic:'http://bbd.songzhj.com/pic/pocket.png', num:'100'}]}";
 		returnData(data, response);
 	}
 
