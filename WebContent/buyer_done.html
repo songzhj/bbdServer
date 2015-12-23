@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百宝袋</title>
+	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="append_order.js"></script>
+	<script type="text/javascript" src="tools/bootstrap.min.js"></script>
+	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div classs="container">
+		<div class="header"></div>
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+						<div class="side_list">
+							<div class="side_block">
+								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+									<div class="item_title"><a href="">账号管理</a></div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="buyer_info.html">个人资料</a></li>
+											<li><a href="buyer_update_pwd.html">修改密码</a></li>
+											<li><a href="buyer_address.html">收货地址</a></li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+									<div class="item_title"><a href="">交易管理</a></div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="buyer_waitpay.html">待付款</a></li>
+											<li><a href="buyer_waitget.html">待收货</a></li>
+											<li><a href="buyer_evaluate.html">待评价</a></li>
+											<li><a href="buyer_refund.html">退货中</a></li>
+											<li><a href="buyer_done.html">已完成</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-8 col-lg-8" >
+						<div>
+							<p class="right_top">
+								<span >已完成</span>
+							</p>
+						</div>
+						<div class="row" id="row_title">
+							<span class="col-lg-5">宝贝标题</span>
+							<span class="col-lg-1">单价</span>
+							<span class="col-lg-1">数量</span>
+							<span class="col-lg-1">总价</span>
+							<span class="col-lg-2">状态</span>
+							<span class="col-lg-2">操作</span>
+						</div>
+						<div class="list">
+							<!-- 添加货物信息 -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		$(".header").load("head.html");
+		$(document).ready(function() {
+			var state = "已完成";
+			var pic_url = "http://bbd.songzhj.com:8800/";
+			$.ajax({
+				type : 'POST',
+				url : "http://bbd.songzhj.com/get_order_action",
+				data: {"state":state},
+				dataType : "json",
+				success : function(data) {
+					$(data.orders).each(function() {
+						appendOrderCustomer(pic_url + this.pic, this.t_name, "url", this.price, this.num, this.state);
+					});
+				},
+				error : function(XMLHttpRequest,textStatus,errorThrown) {
+					alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+				}
+			});
+		});
+		</script>
+	</div>
+
+
+
+
+
+</body>
+</html>

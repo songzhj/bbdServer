@@ -11,4 +11,5 @@ public interface SellerService {
 	int updateInfo(HttpServletRequest request);
 	String getIndo(String id);
 	String getOrder(String userId, String state);
+	boolean savePic(HttpServletRequest request, String id);
 }

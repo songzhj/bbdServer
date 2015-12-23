@@ -1,42 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>百宝袋</title>
-	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="mystyle.css">
-	<script type="text/javascript" src="tools/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript">
+<meta charset="UTF-8">
+<title>百宝袋</title>
+<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<script src="tools/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header"></div>
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
+						<div class="side_list">
+							<div class="side_block">
+								<div class="side_item"
+									onmouseover="this.className='side_item active_item'"
+									onmouseout="this.className='side_item'">
+									<div class="item_title">
+										<a href="">账号管理</a>
+									</div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="#">个人资料</a></li>
+											<li><a href="seller_update_pwd.html">修改密码</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="side_item"
+									onmouseover="this.className='side_item active_item'"
+									onmouseout="this.className='side_item'">
+									<div class="item_title">
+										<a href="">宝贝管理</a>
+									</div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="selling_treasure.html">出售中的宝贝</a></li>
+											<li><a href="publish_treasure.html">发布宝贝</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="side_item"
+									onmouseover="this.className='side_item active_item'"
+									onmouseout="this.className='side_item'">
+									<div class="item_title">
+										<a href="">交易管理</a>
+									</div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="">待付款</a></li>
+											<li><a href="">待发货</a></li>
+											<li><a href="">已发货</a></li>
+											<li><a href="">退款中</a></li>
+											<li><a href="">已完成</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
 
+					</div>
+					<div class="col-md-8 col-lg-8">
+						<div>
+							<div>
+								<p class="right_top">
+									<span>个人资料</span> <span><button id="edit">编辑</button></span>
+								</p>
+							</div>
+							<div>
+								<form>
+									<table class="person_data">
+										<tr>
+											<th>ID：</th>
+											<td><input type="text" name="" id="s_ID" value=""
+												readOnly="true"></td>
+										</tr>
+										<tr>
+											<th>真实姓名：</th>
+											<td><input class="edit_able" type="text" name=""
+												id="s_name" value="" readOnly="true"></td>
+										</tr>
+										<tr>
+											<th>身份证号码：</th>
+											<td><input type="text" name="" id="s_card_number"
+												value="" readOnly="true"></td>
+										</tr>
+										<tr>
+											<th>性别：</th>
+											<td class="gender"><input type="radio" name="sexgroup"
+												id="s_boy" value="b" disabled="disabled">男 ♂ <input
+												type="radio" name="sexgroup" id="s_girl" value="g"
+												disabled="disabled">女 ♀</td>
+										</tr>
+										<tr>
+											<th>手机号：</th>
+											<td><input class="edit_able" type="text" name=""
+												id="s_tel" value="" readOnly="true"></td>
+										</tr>
+										<tr>
+											<th>生日：</th>
+											<td><input class="edit_able" type="text" name=""
+												id="s_birthday" value="" readOnly="true"></td>
+										</tr>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div>
+							<button class="save" type="button">保存</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<script type="text/javascript">
+	$(".header").load("head.html");
 	$(document).ready(function(){
-		$("#edit").click(function(){
-			$(".edit_able").removeAttr("readonly");
-			$(".gender input").removeAttr("disabled");
-			$(".edit_able").css({"border":"1px solid #a1a1a1"});
-			$(".save").css({"display":"block"});
-		});
 		$.ajax({
 		    type:'POST',
 		    url:"http://bbd.songzhj.com/get_user_info_action",
 		    dataType:"json",
 		    success: function (data) {
- 		        $("#s_id").value = data.id;
-		        $("#s_name").value = data.name;
-		        $("#s_birthday").value = data.birthday;
-		        $("#s_tel").value = data.phone;
+ 		        $("#s_ID").val(data.id);
+		        $("#s_name").val(data.name);
+		        $("#s_birthday").val(data.birthday);
+		        $("#s_card_number").val(data.id_card);
+		        $("#s_tel").val(data.phone);
 		    
 		        if (data.sex == "b") {
-		        	#("#s_boy").attr("checked",true);
+		        	$("#s_boy").attr("checked",'checked');
 		        } else if (data.sex == "g"){
-		        	#("#s_girl").attr("checked",true);
+		        	$("#s_girl").attr("checked",'checked');
 		        }
 		    },
 		    error:function() {
 		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
 		    }
 		});
-	});
-	$(document).ready(function(){
+		$("#edit").click(function(){
+			$(".edit_able").removeAttr("readonly");
+			$(".gender input").removeAttr("disabled");
+			$(".edit_able").css({"border":"1px solid #a1a1a1"});
+			$(".save").css({"display":"block"});
+		});
 		$(".save").click(function(){
 			$(".edit_able").attr("readonly","readonly");
 			$(".gender input").attr("disabled","disabled");
@@ -46,16 +158,11 @@
 		});
 	});
 	function saveInfo() {
-		var name = $("#s_name").value;
-		var birthday = $("#s_birthday").value;
-		var phone = $("#s_tel").value;
-		var sex;
-		if ($("#s_boy").attr("checked") == true) {
-			sex = "b";
-		} else {
-			sex = girl;
-		}
-		var jsonData = "{name:" + name + ",birthday:" + birthday + ",sex:" + sex + ",phone:" + phone + "}";
+		var name = $("#s_name").val();
+		var birthday = $("#s_birthday").val();
+		var phone = $("#s_tel").val();
+		var sex = $("input:radio[name='sexgroup']:checked").val();
+		var jsonData = {"name":name, "birthday":birthday, "sex":sex, "phone":phone};
 		$.ajax({
 		    type:'POST',
 		    url:"http://bbd.songzhj.com/update_user_info_action",
@@ -74,103 +181,5 @@
 		});
 	}
 	</script>
-</head>
-<body>
-	<div class="container">
-		<div class="header"></div>
-		<div class="content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
-						<div class="side_list">
-			<div class="side_block">
-				<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
-					<div class="item_title"><a href="">账号管理</a></div>
-					<div class="sub_item">
-						<ul>
-							<li><a href="">个人资料</a></li>
-							<li><a href="">修改密码</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
-					<div class="item_title"><a href="">宝贝管理</a></div>
-					<div class="sub_item">
-						<ul>
-							<li><a href="">出售中的宝贝</a></li>
-							<li><a href="">发布宝贝</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
-					<div class="item_title"><a href="">交易管理</a></div>
-					<div class="sub_item">
-						<ul>
-							<li><a href="">待付款</a></li>
-							<li><a href="">待发货</a></li>
-							<li><a href="">已发货</a></li>
-							<li><a href="">退款中</a></li>
-							<li><a href="">已完成</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-
-					</div>
-					<div class="col-md-8 col-lg-8" >
-						<div>
-							<div>
-								<p class="right_top">
-									<span>个人资料</span>
-									<span><button id="edit">编辑</button></span>
-									<span><button id="logout">注销</button></span>
-								</p>
-							</div>
-							<div>
-								<form>
-									<table class="person_data">
-										<tr>
-											<th>ID：</th>
-											<td><input type="text" name="" id="s_ID" value="" readOnly="true"></td>
-										</tr>
-										<tr>
-											<th>真实姓名：</th>
-											<td><input class="edit_able" type="text" name="" id="s_ame" value="" readOnly="true"></td>
-										</tr>
-										<tr>
-											<th>身份证号码：</th>
-											<td><input type="text" name="" id="s_card_number" value="" readOnly="true"></td>
-										</tr>
-										<tr>
-											<th>性别：</th>
-											<td class="gender"><input type="radio" name="sexgroup" id="s_boy" value="" disabled="disabled">男 ♂
-											<input type="radio" name="sexgroup" id="s_girl" value="g" disabled="disabled">女 ♀</td>
-										</tr>
-										<tr>
-											<th>手机号：</th>
-											<td><input class="edit_able" type="text" name="" id="s_tel" value="" readOnly="true"></td>
-										</tr>
-										<tr>
-											<th>生日：</th>
-											<td><input class="edit_able" type="text" name="" id="s_birthday" value="" readOnly="true"></td>
-										</tr>
-									</table>
-								</form>
-							</div>
-						</div>
-						<div>
-							<button class="save" type="button" >保存</button>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<script type="text/javascript">
-$(".header").load("head.html")
-</script>
 </body>
 </html>

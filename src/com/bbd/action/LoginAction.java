@@ -104,12 +104,14 @@ public class LoginAction extends HttpServlet {
 
 		SellerService sellerService = (SellerServiceImpl) SpringContextUtil
 				.getBean("sellerServiceImpl");
-		HttpSession session = request.getSession();
 		String id = request.getParameter("id");
-		session.setAttribute("id", id);
-		session.setAttribute("userType", "seller");
 		String pwd = request.getParameter("pwd");
 		String data = sellerService.login(id, pwd);
+		HttpSession session = request.getSession();
+		if (!data.equals("0") && !data.equals("2")) {
+			session.setAttribute("id", id);
+			session.setAttribute("userType", "seller");		
+		}
 		returnData(data, response);
 	}
 
@@ -118,12 +120,14 @@ public class LoginAction extends HttpServlet {
 
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
-		HttpSession session = request.getSession();
 		String id = request.getParameter("id");
-		session.setAttribute("id", id);
-		session.setAttribute("userType", "buyer");
 		String pwd = request.getParameter("pwd");
 		String data = buyerServiceImpl.login(id, pwd);
+		HttpSession session = request.getSession();
+		if (!data.equals("0")) {
+			session.setAttribute("id", id);
+			session.setAttribute("userType", "buyer");
+		}
 		returnData(data, response);
 	}
 

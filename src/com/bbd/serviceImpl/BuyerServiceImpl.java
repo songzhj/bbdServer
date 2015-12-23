@@ -21,6 +21,7 @@ import com.bbd.dao.AddressDao;
 import com.bbd.dao.BuyerDao;
 import com.bbd.dao.OrderDao;
 import com.bbd.dao.SellerDao;
+import com.bbd.dao.TIndexDao;
 import com.bbd.dao.TreasureDao;
 import com.bbd.entity.Address;
 import com.bbd.entity.Buyer;
@@ -43,6 +44,8 @@ public class BuyerServiceImpl implements BuyerService {
 	private TreasureDao treasureDao;
 	@Autowired
 	private AddressDao addressDao;
+	@Autowired
+	private TIndexDao tindexDao;
 
 	@Override
 	public int regist(Buyer newBuyer, String code) {
@@ -88,6 +91,7 @@ public class BuyerServiceImpl implements BuyerService {
 		Buyer buyer = buyerDao.selectBuyerByPrimary(id);
 		if (buyer != null) {
 			if (buyer.getPwd().equals(pwd)) {
+				System.out.println(pwd + newPwd);
 				buyer.setPwd(newPwd);
 				buyerDao.updatePwd(buyer);
 				return 1;
@@ -173,6 +177,7 @@ public class BuyerServiceImpl implements BuyerService {
 			if (id == null) id = "null";
 			Buyer buyer = buyerDao.selectBuyerByPrimary(id);
 			buyer.setName(request.getParameter("name"));
+			System.out.println(request.getParameter("sex"));
 			buyer.setSex(request.getParameter("sex"));
 			buyer.setBirthday(Date.valueOf(request.getParameter("birthday")));
 			buyerDao.updateBuyer(buyer);
@@ -266,6 +271,7 @@ public class BuyerServiceImpl implements BuyerService {
 			json.put("t_num", o.gettNum());
 			json.put("price", o.getprice());
 			json.put("state", o.getState());
+			json.put("pic", tindexDao.selectById(o.getId()).getPicUrl());
 			arr.put(json);
 		}
 		data.put("orders", arr);

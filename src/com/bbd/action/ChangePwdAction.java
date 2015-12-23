@@ -61,7 +61,7 @@ public class ChangePwdAction extends HttpServlet {
 		SellerService sellerServiceImpl = (SellerServiceImpl) SpringContextUtil.getBean("sellerServiceImpl");
 		String id = (String) request.getSession().getAttribute("id");
 		String pwd = request.getParameter("pwd");
-		String newPwd = request.getParameter("new _pwd");
+		String newPwd = request.getParameter("new_pwd");
 		int data = sellerServiceImpl.changePwd(id, pwd, newPwd);
 		returnData(data + "", response);
 	}
@@ -72,7 +72,7 @@ public class ChangePwdAction extends HttpServlet {
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil.getBean("buyerServiceImpl");
 		String id = (String) request.getSession().getAttribute("id");
 		String pwd = request.getParameter("pwd");
-		String newPwd = request.getParameter("new _pwd");
+		String newPwd = request.getParameter("new_pwd");
 		int data = buyerServiceImpl.changePwd(id, pwd, newPwd);
 		returnData(data + "", response);
 	}

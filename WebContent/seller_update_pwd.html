@@ -6,7 +6,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
-	<script type="text/javascript" src="tools/jquery-2.1.4.min.js"></script>
+	<script src="tools/jquery.min.js"></script>
 </head>
 <body>
 	
@@ -22,22 +22,29 @@
 									<div class="item_title"><a href="">账号管理</a></div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">个人资料</a></li>
-											<li><a href="">修改密码</a></li>
-											<li><a href="">收货地址</a></li>
+											<li><a href="seller_info.html">个人资料</a></li>
+											<li><a href="seller_update_pwd.html">修改密码</a></li>
 										</ul>
 									</div>
 								</div>
-								
+								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
+									<div class="item_title"><a href="">宝贝管理</a></div>
+									<div class="sub_item">
+										<ul>
+											<li><a href="selling_treasure.html">出售中的宝贝</a></li>
+											<li><a href="publish_treasure.html">发布宝贝</a></li>
+										</ul>
+									</div>
+								</div>
 								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
 									<div class="item_title"><a href="">交易管理</a></div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">待付款</a></li>
-											<li><a href="">待收货</a></li>
-											<li><a href="">待评价</a></li>
-											<li><a href="">退货中</a></li>
-											<li><a href="">已完成</a></li>
+											<li><a href="seller_waitpay.html">待付款</a></li>
+											<li><a href="seller_waitout.html">待发货</a></li>
+											<li><a href="seller_alreadyout.html">已发货</a></li>
+											<li><a href="seller_refund.html">退款中</a></li>
+											<li><a href="seller_done.html">已完成</a></li>
 										</ul>
 									</div>
 								</div>
@@ -59,7 +66,7 @@
 									<tr>
 										<th>请输入密码：</th>
 										<td><input type="password" name="" id="pwd" value="" /> </td>
-										<td><a href="#" ><small> 忘记密码?</small></a> </td>
+										<td><a href="forget_pwd.html" ><small> 忘记密码?</small></a> </td>
 										</tr>
 										<tr>
 											<th>请输入新密码：</th>
@@ -84,9 +91,9 @@
 <script type="text/javascript">
 $(".header").load("head.html")
 function update() {
-	var pwd = $("#pwd").value;
-	var newPwd = $("#new_pwd").value;
-	var jsonData = "{pwd:" + pwd + ",new_pwd:" + newPwd + "}";
+	var pwd = $("#pwd").val();
+	var newPwd = $("#new_pwd").val();
+	var jsonData = {"pwd":pwd, "new_pwd":newPwd};
 	$.ajax({
 	    type:'POST',
 	    url:"http://bbd.songzhj.com/change_pwd_action",

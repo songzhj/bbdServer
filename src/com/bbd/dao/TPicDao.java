@@ -10,4 +10,6 @@ public interface TPicDao {
     int insertSelective(TPic record);
     
     List<TPic> selectByTId(String id);
+
+	void deleteByTid(String tid);
 }

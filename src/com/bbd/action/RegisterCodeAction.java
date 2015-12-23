@@ -41,6 +41,7 @@ public class RegisterCodeAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RegisterCodeService registerCodeServiceImpl = (RegisterCodeServiceImpl) SpringContextUtil.getBean("registerCodeServiceImpl");
 		String email = request.getParameter("email");
+		System.out.println(email);
 		try {
 			registerCodeServiceImpl.sendCode(email);
 		} catch (Exception e) {

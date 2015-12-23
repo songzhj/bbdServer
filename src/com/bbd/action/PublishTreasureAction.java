@@ -2,6 +2,7 @@ package com.bbd.action;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,15 +46,17 @@ public class PublishTreasureAction extends HttpServlet {
 		
 		TreasureService treasureServiceImpl = (TreasureServiceImpl) SpringContextUtil
 				.getBean("treasureServiceImpl");
-		String data = request.getParameter("data");
-		int isSuccess = treasureServiceImpl.publishTreasure(data);
-		retunData("" + isSuccess, response);
-	}
-
-	private void retunData(String data, HttpServletResponse response) throws IOException {
-		Writer out = response.getWriter();
-		out.write(data);
-		out.close();
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) {
+			id = "null";
+		}
+		ArrayList<String> pics = treasureServiceImpl.getPics(id, request);
+		int isSuccess = treasureServiceImpl.publishTreasure(id, pics, request);
+		if (isSuccess == 1) {
+			response.sendRedirect("http://bbd.songzhj.com/selling_treasure.html");
+		} else {
+			response.sendRedirect("error.html");
+		}
 	}
 
 }

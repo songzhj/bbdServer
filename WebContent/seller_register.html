@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>register卖家设置用户名</title>
+<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<!--页头-->
+			<div class="page-header">
+
+				<h2 class="text-muted">
+					<a href="#"><img src="pic/logo.png"></a>卖家注册
+				</h2>
+				<h3 class="text-info">&nbsp&nbsp&nbspbaibaodai.com</h3>
+			</div>
+
+
+			<!--注册页进度条-->
+			<div class="btn-group btn-group-lg btn-group-justified" role="group"
+				aria-label="">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-primary disabled">注册选项</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-primary active">设置用户名</button>
+				</div>
+
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-primary disabled">注册成功</button>
+				</div>
+
+			</div>
+
+		</header>
+	</div>
+	<!--表单-->
+	</br>
+	</br>
+	</br>
+	</br>
+	<div class="container">
+		<form class="form-horizontal" action="" method="post"
+			enctype="multipart/form-data" name="form2">
+			<!--邮箱-->
+			<div class="form-group">
+				<label for="inputEmail" class="col-sm-4 control-label">邮箱：</label>
+				<div class="col-sm-3">
+					<input type="email" class="form-control require" id="inputEmail"
+						placeholder="请输入电子邮箱">
+				</div>
+				<input type="button" class="btn btn-primary btn-sm" value="发送"
+					id="sendCode">
+
+			</div>
+			<!--验证码-->
+			<div class="form-group">
+				<label for="validate" class="col-sm-4 control-label text-muted">验证码；</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="validate"
+						placeholder="请输入验证码">
+				</div>
+				<label class="control-label text-danger">点击发送我们将验证码发送到您的邮箱</label>
+
+			</div>
+
+			<!--用户名-->
+			<div class="form-group">
+				<label for="inputUsername" class="col-sm-4 control-label">用户名：</label>
+				<div class="col-sm-4">
+					<input type="name" class="form-control require" id="inputUsername"
+						placeholder="输入用户名">
+				</div>
+			</div>
+			<!--密码-->
+			<div class="form-group">
+				<label for="inputPassword" class="col-sm-4 control-label">密码：</label>
+				<div class="col-sm-4">
+					<input type="password" class="form-control require"
+						id="inputPassword" placeholder="输入密码">
+				</div>
+			</div>
+			<!--确认密码-->
+			<div class="form-group">
+				<label for="inputConfirmPassword" class="col-sm-4 control-label">确认密码：</label>
+				<div class="col-sm-4">
+					<input type="password" class="form-control require"
+						id="inputConfirmPassword" placeholder="再次输入秘密">
+				</div>
+			</div>
+
+
+			<!--提示语-->
+			<div class="form-group">
+				<p class="col-sm-4 col-sm-offset-4 text-danger">如果您要开店请如实填写下列信息</p>
+			</div>
+
+
+
+			<!--真实姓名-->
+			<div class="form-group">
+
+				<label for="realName" class="col-sm-4 control-label">真实姓名：</label>
+				<div class="col-sm-4">
+					<input type="name" class="form-control require" id="realName"
+						placeholder="输入您的真实姓名">
+				</div>
+			</div>
+			<!--性别-->
+			<div class="form-group">
+				<label for="sex" class="col-sm-4 control-label">性别；</label>
+				<div class="col-sm-4">
+					<label class="radio-inline col-sm-2"> <input type="radio"
+						name="choosesex" id="sex" value="b" checked>♂男
+					</label> <label class="radio-inline col-sm-2"> <input type="radio"
+						name="choosesex" id="sex" value="g">♀女
+					</label>
+				</div>
+			</div>
+
+			<!-- 生日 -->
+			<div class="form-group">
+				<label for="birthday" class="col-sm-4 control-label">生日：</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control require" id="birthday"
+						placeholder="请输入您的出生年月日 格式xxxx-xx-xx">
+				</div>
+			</div>
+
+
+			<!--手机号码-->
+			<div class="form-group">
+				<label for="phoneNum" class="col-sm-4 control-label">手机号码：</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control require" id="phoneNum"
+						placeholder="请输入您的手机号码">
+				</div>
+			</div>
+
+
+			<!--身份账号-->
+			<div class="form-group">
+				<label for="idcardNum" class="col-sm-4 control-label">身份证号码：</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control require" id="idcardNum"
+						placeholder="请输入您的身份证号码">
+				</div>
+			</div>
+
+			<!--实名认证-->
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label">实名认证：</label>
+
+
+				<div class="col-sm-4">
+					<div id="preview">
+						<img id="imghead" border=0 src="images/head_180.jpg" width="180"
+							height="180" />
+					</div>
+					<p>请上传本人与身份证合影</p>
+					<input id="IDCardPic" type="file" onchange="previewImage(this)" />
+				</div>
+			</div>
+			<!--提交按钮-->
+			</br>
+			</br>
+			<div class="form-group">
+				<div class="col-sm-3 col-sm-offset-4">
+					<!-- <button id="send" type="submit" class="btn btn-primary btn-lg btn-block" >下一步</button> -->
+					<input id="nextStep" type="button"
+						class="btn btn-primary btn-lg btn-block" value="下一步">
+				</div>
+
+			</div>
+
+		</form>
+	</div>
+
+	<script type="text/javascript" src="tools/jquery.min.js"></script>
+	<script type="text/javascript" src="tools/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/formTest.js"></script>
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#nextStep")
+									.click(
+											function() {
+												var userType = "seller";
+												var email = $("#inputEmail")
+														.val();
+												var code = $("#validate").val();
+												var id = $("#inputUsername")
+														.val();
+												var pwd = $("#inputPassword")
+														.val();
+												var name = $("#realName").val();
+												var birthday = $("#birthday")
+														.val();
+												var sex = $(
+														"input:radio[name='choosesex']:checked")
+														.val();
+												var idCard = $("#idcardNum")
+														.val();
+												var phone = $("#phoneNum")
+														.val();
+
+												var url = "http://bbd.songzhj.com/register_action?";
+												url += "user_type=" + userType
+														+ "&email=" + email
+														+ "&id=" + id + "&pwd="
+														+ pwd + "&code=" + code
+														+ "&name=" + name
+														+ "&sex=" + sex
+														+ "&birthday="
+														+ birthday + "&phone="
+														+ phone + "&id_card="
+														+ idCard;
+												document.form2.action = url;
+												document.form2.submit();
+											});
+
+							$("#sendCode")
+									.click(
+											function() {
+												var email = $("#inputEmail")
+														.val();
+												if (email == "") {
+													alert("请填写邮箱!");
+													return;
+												}
+												$
+														.ajax({
+															type : 'post',
+															url : "http://bbd.songzhj.com/register_code_acion",
+															data : {
+																"email" : email
+															},
+															dataType : "text",
+															success : function(
+																	data) {
+															},
+															error : function() {
+																alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+															}
+														});
+											});
+						});
+	</script>
+
+
+</body>
+</html>

@@ -16,7 +16,8 @@
 	color: #fff;
 }
 .search{
-	margin-top: 80px;
+	margin-top: 80px
+
 }
 .logo{
 	position: absolute;
@@ -184,18 +185,16 @@
 li{
 	cursor:pointer;
 }
-.person_data,.password{
+.person_data,.password,.add_item{
 	color:#a1a1a1;
 	font-size: 120%;
-	line-height: 3em;
-
 }
-.person_data th,.password th{
+.person_data th,.password th ,.add_item th{
 	text-align: right;
+	padding: 13px 0px;
 }
 .person_data input{
 	border:hidden;
-	height: 30px;
 }
 .save{
 	margin-top: 50px;
@@ -204,12 +203,7 @@ li{
 	background-color: #36f;
 	color: #fff;
 }
-.gender input{
-	height: 0px;
-}
-.password input{
-	height: 30px;
-}
+
 #set_password ,.add{
 	margin-top: 50px;
 	margin-left: 250px;
@@ -245,7 +239,25 @@ li{
 	margin-top: 20px;
 	padding: 20px 0px;
 }
+/*
 .right{
 	margin-bottom: 50px;
+}*/
+
+.pay_login table{
+	width: 290px;
+	color: #797979;
+	text-align: center;
+	font-size: 130%;
+	margin: auto;
 }
 
+.homepage_inner{
+			height:600px;
+}
+.customer_func{
+			font-size: 120%;
+			padding: 10px;
+			padding-left: 0px;
+			margin-bottom: 20px;
+		}

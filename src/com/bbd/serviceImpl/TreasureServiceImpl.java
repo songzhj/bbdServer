@@ -1,15 +1,28 @@
 package com.bbd.serviceImpl;
 
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.bbd.dao.TIndexDao;
 import com.bbd.dao.TPicDao;
@@ -20,7 +33,7 @@ import com.bbd.entity.Treasure;
 import com.bbd.service.TreasureService;
 
 @Service
-public class TreasureServiceImpl implements TreasureService{
+public class TreasureServiceImpl implements TreasureService {
 	@Autowired
 	TreasureDao treasureDao;
 	@Autowired
@@ -29,57 +42,50 @@ public class TreasureServiceImpl implements TreasureService{
 	TPicDao tPicDao;
 
 	@Override
-	public int publishTreasure(String data) {
+	public int publishTreasure(String id, ArrayList<String> pics, HttpServletRequest request) {
 		try {
-			JSONObject jsonObj = new JSONObject(data);
-			Treasure t = setTreasure(jsonObj);
+			Treasure t = setTreasure(id, request);
 			treasureDao.insert(t);
-			
-			JSONArray pics = jsonObj.getJSONArray("pic_url");
-			
 			setTreasureIndex(t, pics);
-			
 			setTreasurePicture(t, pics);
-			
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
-		
 		return 1;
 	}
 
-	private void setTreasurePicture(Treasure t, JSONArray pics) {
-		for (int i = 1; i < pics.length(); ++i) {
+	private void setTreasurePicture(Treasure t, ArrayList<String> pics) {
+		for (int i = 1; i < pics.size(); ++i) {
 			TPic tpic = new TPic();
 			tpic.settId(t.getId());
-			tpic.setPicUrl(pics.getString(i));
+			tpic.setPicUrl(pics.get(i));
 			tPicDao.insert(tpic);
 		}
 	}
 
-	private void setTreasureIndex(Treasure t, JSONArray pics) {
-		if (pics.length() != 0) {
+	private void setTreasureIndex(Treasure t, ArrayList<String> pics) {
+		if (pics.size() != 0) {
 			TIndex index = new TIndex();
 			index.settId(t.getId());
 			index.settName(t.getName());
-			index.setPicUrl(pics.getString(0));
+			index.setPicUrl(pics.get(0));
 			tIndexDao.insert(index);
 		}
 	}
 
-	private Treasure setTreasure(JSONObject jsonObj) {
+	private Treasure setTreasure(String id, HttpServletRequest request) {
 		Treasure t = new Treasure();
-		t.setName(jsonObj.getString("name"));
-		t.setSex(jsonObj.getString("sex"));
-		t.setBrand(jsonObj.getString("brand"));
-		t.setColor(jsonObj.getString("color"));
-		t.setPrice(jsonObj.getDouble("price"));
-		t.setSellerId(jsonObj.getString("seller_id"));
-		t.setNum(jsonObj.getBigDecimal("num"));
-		t.setDescribe(jsonObj.getString("describe"));
-		t.setSize(jsonObj.getString("size"));	
+		t.setName(request.getParameter("name"));
+		t.setSex(request.getParameter("sex"));
+		t.setBrand(request.getParameter("brand"));
+		t.setColor(request.getParameter("color"));
+		t.setSize(request.getParameter("size"));
+		t.setPrice(Double.parseDouble(request.getParameter("price")));
+		t.setNum(new BigDecimal(request.getParameter("num")));
+		t.setDescribe(request.getParameter("describe"));
 		String tid = getTreasureId(t);
+		t.setSellerId(id);
 		t.setId(tid);
 		return t;
 	}
@@ -87,7 +93,8 @@ public class TreasureServiceImpl implements TreasureService{
 	private String getTreasureId(Treasure t) {
 		SimpleDateFormat f = new SimpleDateFormat("yyyyMMddhhmmss");
 		String nameHash = t.getName().hashCode() + "";
-		String tid = f.format(Calendar.getInstance().getTime()) + nameHash.substring(nameHash.length() - 3);
+		String tid = f.format(Calendar.getInstance().getTime())
+				+ nameHash.substring(nameHash.length() - 3);
 		return tid;
 	}
 
@@ -95,6 +102,9 @@ public class TreasureServiceImpl implements TreasureService{
 	public int removeTreasure(String tid) {
 		if (null != treasureDao.selectByPrimaryKey(tid)) {
 			treasureDao.deleteByPrimaryKey(tid);
+			tIndexDao.deleteByTid(tid);
+			tPicDao.deleteByTid(tid);
+			//TODO:删除图片服务器的图片
 			return 1;
 		}
 		return 0;
@@ -103,14 +113,15 @@ public class TreasureServiceImpl implements TreasureService{
 	@Override
 	public String searchTreasure(String context) {
 		List<TIndex> index = searchIndexs(context);
-		if (index == null) return "0";	
+		if (index == null)
+			return "0";
 		JSONObject data = treasureToJson(index);
 		return data.toString();
 	}
 
 	private JSONObject treasureToJson(List<TIndex> index) {
 		JSONArray jsArr = new JSONArray();
-		for(TIndex t : index) {
+		for (TIndex t : index) {
 			JSONObject jsObj = new JSONObject();
 			jsObj.put("id", t.gettId());
 			jsObj.put("name", t.gettName());
@@ -197,5 +208,32 @@ public class TreasureServiceImpl implements TreasureService{
 		System.out.println(data.toString());
 		return data.toString();
 	}
-	
+
+	@Override
+	public ArrayList<String> getPics(String id, HttpServletRequest request) throws IllegalStateException, IOException {
+		
+		MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request); 
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		Set<Entry<String, MultipartFile>> set = fileMap.entrySet();
+		Iterator<Entry<String, MultipartFile>> it = set.iterator();
+		ArrayList<String> pics = new ArrayList<String>();
+		int i = 0;
+		while (it.hasNext()) {
+			Entry<String, MultipartFile> entry = (Entry<String, MultipartFile>) it.next();
+			String key = (String) entry.getKey();
+			
+			MultipartFile file = (MultipartFile) entry.getValue();
+			File originFile = new File("F:/code/php", key);
+			file.transferTo(originFile);
+			String fileName = "";
+			SimpleDateFormat f = new SimpleDateFormat("yyyyMMddhhmmss");
+			fileName = f.format(Calendar.getInstance().getTime()) + id + i++ + ".jpg";
+			pics.add(fileName);
+			File newFile = new File("F:/code/php/" + fileName);
+			originFile.renameTo(newFile);
+		}
+		return pics;
+	}
+
 }

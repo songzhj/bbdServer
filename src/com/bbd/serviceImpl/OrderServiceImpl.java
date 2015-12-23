@@ -35,7 +35,36 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	private String getBuyerOrderByType(String id) {
-		return null;
+		List<Order> list = orderDao.selectByBuyerId(id);
+		Integer waitPay = 0;
+		Integer waitOut = 0;
+		Integer alreadyOut = 0;
+		Integer refund = 0;
+		for (Order o : list) {
+			switch (o.getState()) {
+			case "待付款":
+				waitPay++;
+				break;
+			case "待发货":
+				waitOut++;
+				break;
+			case "待收货":
+				alreadyOut++;
+				break;
+			case "退款中":
+				refund++;
+				break;
+			default:
+				break;
+			}
+		}
+		JSONObject data = new JSONObject();
+		data.put("wait_pay", waitPay);
+		data.put("wait_out", waitOut);
+		data.put("already_out", alreadyOut);
+		data.put("refund", refund);
+		data.put("user_id", id);
+		return data.toString();
 	}
 
 	private String getSellerOrderByType(String id) {
@@ -52,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 			case "待发货":
 				waitOut++;
 				break;
-			case "已发货":
+			case "待收货":
 				alreadyOut++;
 				break;
 			case "退款中":

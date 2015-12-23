@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>百宝袋</title>
-	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="mystyle.css">
-	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
-	<style type="text/css">
-		.add_item table{
-			line-height: 3em;
-		}
-		.add_item table input{
-			height: 30px;
-			width: 300px;
-		}
-		.add_item table .gender input{
-			height: 0px;
-			width: 20px;
-		}
-		.pic td input{
-			height: 40px;
-		}
-	</style>
+<meta charset="UTF-8">
+<title>百宝袋</title>
+<script src="tools/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<script type="text/javascript">
+	var i = 1;
+</script>
 </head>
 <body>
 	<div class="container">
@@ -32,33 +19,45 @@
 					<div class="col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1">
 						<div class="side_list">
 							<div class="side_block">
-								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
-									<div class="item_title"><a href="">账号管理</a></div>
+								<div class="side_item"
+									onmouseover="this.className='side_item active_item'"
+									onmouseout="this.className='side_item'">
+									<div class="item_title">
+										<a href="">账号管理</a>
+									</div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">个人资料</a></li>
-											<li><a href="">修改密码</a></li>
+											<li><a href="seller_info.html">个人资料</a></li>
+											<li><a href="seller_update_pwd.html">修改密码</a></li>
 										</ul>
 									</div>
 								</div>
-								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
-									<div class="item_title"><a href="">宝贝管理</a></div>
+								<div class="side_item"
+									onmouseover="this.className='side_item active_item'"
+									onmouseout="this.className='side_item'">
+									<div class="item_title">
+										<a href="">宝贝管理</a>
+									</div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">出售中的宝贝</a></li>
-											<li><a href="">发布宝贝</a></li>
+											<li><a href="selling_treasure.html">出售中的宝贝</a></li>
+											<li><a href="publish_treasure.html">发布宝贝</a></li>
 										</ul>
 									</div>
 								</div>
-								<div class="side_item" onmouseover="this.className='side_item active_item'" onmouseout="this.className='side_item'">	
-									<div class="item_title"><a href="">交易管理</a></div>
+								<div class="side_item"
+									onmouseover="this.className='side_item active_item'"
+									onmouseout="this.className='side_item'">
+									<div class="item_title">
+										<a href="">交易管理</a>
+									</div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">待付款</a></li>
-											<li><a href="">待发货</a></li>
-											<li><a href="">已发货</a></li>
-											<li><a href="">退款中</a></li>
-											<li><a href="">已完成</a></li>
+											<li><a href="seller_waitpay.html">待付款</a></li>
+											<li><a href="seller_waitout.html">待发货</a></li>
+											<li><a href="seller_alreadyout.html">已发货</a></li>
+											<li><a href="seller_refund.html">退款中</a></li>
+											<li><a href="seller_done.html">已完成</a></li>
 										</ul>
 									</div>
 								</div>
@@ -66,86 +65,115 @@
 						</div>
 
 					</div>
-					<div class="col-md-8 col-lg-8 right" >
+					<div class="col-md-8 col-lg-8 right">
 						<div>
 							<p class="right_top">
-								<span >发布宝贝</span>
+								<span>发布宝贝</span>
 							</p>
 						</div>
 						<div>
-							<form class="add_item" action="" method="post">
+							<form class="add_item"
+								action="http://bbd.songzhj.com/publish_treasure_action"
+								method="post" enctype="multipart/form-data" name="form2">
 								<table>
 									<tr>
 										<th>宝贝属性</th>
 									</tr>
 									<tr>
-										<th></th>
-										<td>
-										<table>
-											<tr>
-												<th>名称：</th>
-												<td><input type="text" name="" id="" value="" title="请输入1-40个字符，其中只包含汉字字母和数字" placeholder="请输入1-40个字符，其中只包含汉字字母和数字" pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]){1,40}"></td>
-											</tr>
-											<tr>
-												<th>性别：</th>
-												<td class="gender">
-													<input type="checkbox" name="sex" id="" value="">男
-													<input type="checkbox" name="sex" id="" value="">女
-													<input type="checkbox" name="sex" id="" value="">无
-												</td>
-											</tr>
-											<tr>
-												<th>尺码：</th>
-												<td><input type="text" name="" id="" value="" title="请输入1-20个字符，其中只包含汉字字母和数字（多个尺码间用逗号隔开）"
-												placeholder="请输入1-20个字符，其中只包含汉字字母和数字（多个尺码间用逗号隔开）"
-												pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]|\,){1,20}"></td>
-											</tr>
-											<tr>
-												<th>品牌：</th>
-												<td><input type="text" name="" id="" value="" title="请输入1-20个字符，其中只包含汉字字母和数字" pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]){1,20}"></td>
-											</tr>
-											<tr>
-												<th>颜色：</th>
-												<td><input type="text" name="" id="" value="" title="请输入1-20个字符，其中只包含汉字字母和数字（多个颜色间用逗号隔开）"
-													placeholder="请输入1-20个字符，其中只包含汉字字母和数字（多个颜色间用逗号隔开"
-													pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]|\,){1,20}"></td>
-											</tr>
-										</table>
-										</td>
+										<th>名称：</th>
+										<td><input type="text" name="name" id="" value=""
+											title="请输入1-40个字符，其中只包含汉字字母和数字" placeholder="请输入1-40个字符"
+											pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]){1,40}"></td>
+									</tr>
+									<tr>
+										<th>性别：</th>
+										<td class="gender"><input type="radio" name="sex"
+											value="b">男 <input type="radio" name="sex" value="g">女
+											<input type="radio" name="sex" value="n">无</td>
+									</tr>
+									<tr>
+										<th>尺码：</th>
+										<td><input type="text" name="size" id="" value=""
+											title="请输入1-20个字符，其中只包含汉字字母和数字（多个尺码间用逗号隔开）"
+											placeholder="逗号隔开"
+											pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]|\,){1,20}"></td>
+									</tr>
+									<tr>
+										<th>品牌：</th>
+										<td><input type="text" name="brand" id="" value=""
+											title="请输入1-20个字符，其中只包含汉字字母和数字" placeholder="请输入1-20个字符"
+											pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]){1,20}"></td>
+									</tr>
+									<tr>
+										<th>颜色：</th>
+										<td><input type="text" name="color" id="" value=""
+											title="请输入1-20个字符，其中只包含汉字字母和数字（多个颜色间用逗号隔开）"
+											placeholder="逗号隔开"
+											pattern="([\u4e00-\u9fa5]|[A-Za-z]|[0-9]|\,){1,20}"></td>
 									</tr>
 									<tr>
 										<th>宝贝价格：</th>
-										<td><input type="text" name="" id="" value="" pattern="^[0-9]+([.][0-9]+){0,1}" title="只能输入整数或者小数，最多包含16位！"></td>
+										<td><input type="text" name="price" id="" value=""
+											pattern="^[0-9]+([.][0-9]+){0,1}" title="只能输入整数或者小数，最多包含16位！"></td>
 									</tr>
 									<tr>
 										<th>剩余数量：</th>
-										<td><input type="text" name="" id="" value="" title="只能输入整数,最多包含9位！" pattern="^\+?[1-9][0-9]{0,8}"></td>
+										<td><input type="text" name="num" id="" value=""
+											title="只能输入整数,最多包含9位！" pattern="^\+?[1-9][0-9]{0,8}"></td>
 									</tr>
 									<tr>
 										<th>宝贝描述：</th>
-										<td><textarea name="" id="" cols="50" rows="2" title="您最多可输入100个字！" 
-											placeholder="您最多可输入100个字！"></textarea></td>
+										<td><textarea name="describe" id="" cols="50" rows="2"
+												title="您最多可输入100个字！" placeholder="您最多可输入100个字！"></textarea></td>
 									</tr>
 									<tr class="pic">
-										<th >宝贝图片：</th>
-										<td><input type="file" id="file5" name="file5" class="required" multiple accept="image/*" /></td>
+										<th>宝贝图片：</th>
+										<td><div id="upload_pics_div">
+												<input type="file" name="pic_url_1" class="required" multiple accept="image/*" />
+											</div></td>
+									</tr>
+									<tr>
+										<th></th>
+										<td><input type="button" id="add_a_upload_pic" value="增加一个图片"></td>
 									</tr>
 								</table>
+								<input class="add" type="button" id="submit_to_publish_treasure" value="提交并发布">
+
 							</form>
-							<input class="add" type="submit" name="" id="" value="提交并发布">
 						</div>
 
-						
 					</div>
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
-		$(".header").load("head.html")
+			$(".header").load("head.html")
+			$(document).ready(function() {
+				$("#add_a_upload_pic").click(function() {
+					i++;
+					$("#upload_pics_div").append("<input type='file' name='pic_url_" + i + "' class='required' multiple accept='image/*' />");
+				});
+				$("#submit_to_publish_treasure").click(function() {
+					var url="http://bbd.songzhj.com/publish_treasure_action?";
+					var name = $("input[name='name']").val();
+					var sex = $("input[name='sex']").val();
+					var size = $("input[name='size']").val();
+					var brand = $("input[name='brand']").val();
+					var color = $("input[name='color']").val();
+					var price = $("input[name='price']").val();
+					var num = $("input[name='num']").val();
+					var describe = $("input[name='describe']").val();
+					url += "name=" + name + "&sex=" + sex + "&size=" + size + "&brand=" + brand + "&color=" + color + "&price=" + price + "&num=" + num + "&describe=" + describe;
+					document.form2.action = url;
+					document.form2.submit();
+					location.href="http://bbd.songzhj.com/selling_treasure.html";
+				});
+			})
+
 		</script>
 	</div>
 
 
-	
+
 </body>
 </html>

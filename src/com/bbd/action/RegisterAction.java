@@ -50,6 +50,7 @@ public class RegisterAction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
 		String userType = request.getParameter("user_type");
 		switch (userType) {
 		case "buyer":
@@ -72,8 +73,14 @@ public class RegisterAction extends HttpServlet {
 		Seller seller = new Seller();
 		seller = setSeller(request, seller);
 		String code = request.getParameter("code");
-		Integer data = sellerService.regist(seller, code);
-		returnData(data.toString(), response);
+		boolean isSaved = sellerService.savePic(request, seller.getId());
+			Integer data = sellerService.regist(seller, code);
+			if (data == 1) {
+				response.sendRedirect("http://bbd.songzhj.com/seller_register_success.html");
+			} else {
+				response.sendRedirect("error.html");
+			}
+
 	}
 
 	private Seller setSeller(HttpServletRequest request, Seller seller) {
@@ -88,7 +95,7 @@ public class RegisterAction extends HttpServlet {
 		seller.setSex(request.getParameter("sex"));
 		seller.setIdCard(request.getParameter("id_card"));
 		seller.setPhone(request.getParameter("phone"));
-		seller.setState("0");
+		seller.setState("1"); // TODO: 这地方应该是0, 未添加管理员时暂设为1.
 		seller.setUserPic(request.getParameter("user_pic"));
 		return seller;
 	}

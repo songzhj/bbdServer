@@ -44,4 +44,7 @@
       </if>
     </trim>
   </insert>
+  <delete id="deleteByTid" parameterType="String">
+  	delete from t_index where t_id=#{tid,jdbcType=VARCHAR}
+  </delete>
 </mapper>

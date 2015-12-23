@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+<script type="text/javascript">
+	var sum = 0;
+</script>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<!--页头-->
+			<div class="page-header">
+
+				<h2 class="text-muted">
+					<a href="#"><img src="pic/logo.png"></a>用户登录
+				</h2>
+				<h3 class="text-info">
+					&nbsp&nbsp&nbsp<a href="homepage.html">baibaodai.com</a>
+				</h3>
+			</div>
+		</header>
+
+
+		<div class="container">
+			<div class="row">
+
+				<br>
+				<div class="panel panel-default comtainer col-sm-3 col-sm-offset-8">
+
+					<div class="">
+						<br> <select id="user_type_select" class="form-control">
+							<option value="buyer">我是买家</option>
+							<option value="seller">我是卖家</option>
+						</select> <br>
+
+					</div>
+
+
+
+
+					<form class="" action="" method="">
+						<!--用户名-->
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-user"></span></span> <input type="text"
+									class="form-control require" id="userId" placeholder="请输入用户名">
+							</div>
+						</div>
+						<!--密码-->
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-lock"></span></span> <input type="password"
+									class="form-control require" id="inputPassword"
+									placeholder="请输入密码">
+							</div>
+						</div>
+						<div class="form-group" id="loginCode">
+						
+			
+						</div>
+						<!--链接-->
+						<div class="form-group">
+							<button type="button" class="btn btn-link" id="forget_pwd">忘记密码</button>
+							<button type="button" class="btn btn-link" id="register_fun">免费注册</button>
+						</div>
+						<!--登录按钮-->
+						<div class="form-group">
+							<input id="send" type="button" class="btn btn-primary btn-block" value="登录">
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+	</div>
+
+
+
+
+
+	<script type="text/javascript" src="tools/jquery.min.js"></script>
+	<script type="text/javascript" src="tools/bootstrap.min.js"></script>
+	<script type="text/javascript" src="formTest.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#send").click(function() {
+				if (sum != 0) {
+					if ($("#code").val() != sum) {
+						alert("验证码错误.");
+						$("#check_code").remove();
+						checkCode();
+						return;
+					}
+				}
+				var userType = $("#user_type_select").val();
+				var id = $("#userId").val();
+				var pwd = $("#inputPassword").val();
+				$.ajax({
+					type : 'POST',
+					url : "http://bbd.songzhj.com/login_action",
+					dataType : "text",
+					data: {"user_type":userType, "id":id, "pwd":pwd},
+					success : function(data) {
+						if (data == 0) {
+							$("#check_code").remove();
+							alert("账号或密码错误!");
+							checkCode();
+						} else if (data == 2) {
+							alert("您的账号正在审核 .");
+						} else {
+							location.href = "homepage.html";	
+						}
+					},
+					error : function(XMLHttpRequest, textStatus,
+							errorThrown) {
+						alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+					}
+				});
+			});
+			
+			$("#forget_pwd").click(function() {
+				location.href = "forget_pwd.html";
+			});
+			$("#register_fun").click(function() {
+				location.href = "register.html";
+			});
+		});
+		function checkCode() {
+			var a = Math.random() * 30;
+			a = parseInt(a);
+			var b = Math.random() * 30;
+			b = parseInt(b);
+			sum = a + b;
+			var context = "<div class='input-group' id='check_code'>" +
+							"<span class='input-group-addon'>" + a + " + " + b + " =</span> <input type='text'" +
+							"class='form-control require' id='code' placeholder='请输入结果'></div>";
+			$("#loginCode").append(context);
+		
+		}
+	</script>
+</body>
+</html>

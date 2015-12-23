@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 <script type="text/javascript">
-	function appendText(pic, good, url, price, num, button_name) {
+	function appendText(pic, good, url, price, num, button_name, t_id) {
 		var myTreasure = "<div class='row goods_item'>" +
 							"<span class='col-lg-3 col-md-3 goods_pic'>" +
 							"<a>" +
@@ -21,7 +21,7 @@
 							"<span class='col-lg-2'>" + price + "</span>" +
 							"<span class='col-lg-2'>" + num + "</span>" +
 							"<div class='col-lg-2'>" +
-							"<button>" + button_name + "</button>" +
+							"<button class='r_button' id=" + t_id + ">" + button_name + "</button>" +
 							"</div>" +
 							"</div>";
 
@@ -46,8 +46,8 @@
 									</div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">个人资料</a></li>
-											<li><a href="">修改密码</a></li>
+											<li><a href="seller_info.html">个人资料</a></li>
+											<li><a href="seller_update_pwd.html">修改密码</a></li>
 										</ul>
 									</div>
 								</div>
@@ -59,8 +59,8 @@
 									</div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">出售中的宝贝</a></li>
-											<li><a href="">发布宝贝</a></li>
+											<li><a href="selling_treasure.html">出售中的宝贝</a></li>
+											<li><a href="publish_treasure.html">发布宝贝</a></li>
 										</ul>
 									</div>
 								</div>
@@ -72,11 +72,11 @@
 									</div>
 									<div class="sub_item">
 										<ul>
-											<li><a href="">待付款</a></li>
-											<li><a href="">待发货</a></li>
-											<li><a href="">已发货</a></li>
-											<li><a href="">退款中</a></li>
-											<li><a href="">已完成</a></li>
+											<li><a href="seller_waitpay.html">待付款</a></li>
+											<li><a href="seller_waitout.html">待发货</a></li>
+											<li><a href="seller_alreadyout.html">已发货</a></li>
+											<li><a href="seller_refund.html">退款中</a></li>
+											<li><a href="seller_done.html">已完成</a></li>
 										</ul>
 									</div>
 								</div>
@@ -105,15 +105,17 @@
 	<script type="text/javascript">
 			$(".header").load("head.html");
 			$(document).ready(function() {
-				var url = "http://bbd.songzhj.com/(baobeixiangqing)?tid=";
+				var url = "http://bbd.songzhj.com/details.html?tid=";
+				var pic_url = "http://bbd.songzhj.com:8800/";
 				$.ajax({
 					type : 'POST',
 					url : "http://bbd.songzhj.com/get_treasure_action",
 					dataType : "json",
 					success : function(data) {
 						$(data.treasures).each(function() {
-							appendText(this.pic, this.name, url + this.t_id, this.price, this.num, "下架");
+							appendText(pic_url + this.t_pic, this.name, url + this.t_id, this.price, this.num, "下架", this.t_id);
 						});
+						removeBind();
 					},
 					error : function(XMLHttpRequest,textStatus,errorThrown) {
 						alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
@@ -121,6 +123,24 @@
 					}
 				});
 			});
+			function removeBind() {
+				$(".r_button").click(function() {
+					var t_id = $(this).attr("id");
+					$.ajax({
+						type : 'POST',
+						url : "http://bbd.songzhj.com/remove_treasure_action",
+						data: {"t_id":t_id},
+						dataType : "json",
+						success : function(data) {
+							window.location.reload();
+						},
+						error : function(XMLHttpRequest,textStatus,errorThrown) {
+							alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+							alert(textStatus);
+						}
+					});
+				});
+			}
 		</script>
 </body>
 </html>

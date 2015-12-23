@@ -40,7 +40,7 @@
 		)
 		values(#{id}, #{pwd}, #{email},
 		#{regisDate}, #{birthday}, #{idCard},
-		${phone}, #{sex}, #{state}
+		${phone}, #{sex}, #{state},
 		#{name},#{userPic})
 	</insert>
 	<insert id="insertForCode" parameterType="com.bbd.entity.Seller">
@@ -52,7 +52,7 @@
 	<!-- 修改 -->
 	<update id="updateSeller" parameterType="com.bbd.entity.Seller">
 		update seller set
-		birthday=#{birthday}, name=#{name}, pwd=#{pwd} where id=#{id}
+		birthday=#{birthday}, name=#{name}, pwd=#{pwd}, phone=#{phone}, sex=#{sex} where id=#{id}
 	</update>
 	<update id="updateState" parameterType="com.bbd.entity.Seller">
 		update seller set

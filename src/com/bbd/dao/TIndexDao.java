@@ -12,4 +12,6 @@ public interface TIndexDao {
     List<TIndex> selectByName(String name);
     
     TIndex selectById(String id);
+
+	void deleteByTid(String tid);
 }
