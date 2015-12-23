@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 
+
 import com.bbd.entity.Buyer;
 
 public interface BuyerService {
@@ -20,4 +21,5 @@ public interface BuyerService {
 	int addAddress(HttpServletRequest request);
 	String getAddress(String id);
 	String getOrder(String userId, String state);
+	int delAddress(String aid);
 }

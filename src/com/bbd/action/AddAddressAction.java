@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.BuyerService;
 import com.bbd.serviceImpl.BuyerServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -45,6 +47,13 @@ public class AddAddressAction extends HttpServlet {
 
 		BuyerService buyerServiceImpl = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		int isSuccess = buyerServiceImpl.addAddress(request);
 		returnData(isSuccess + "", response);
 	}

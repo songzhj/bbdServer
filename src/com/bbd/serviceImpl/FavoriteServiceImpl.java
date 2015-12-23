@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bbd.dao.FavoriteDao;
 import com.bbd.dao.TreasureDao;
@@ -13,6 +14,7 @@ import com.bbd.entity.Favorite;
 import com.bbd.entity.Treasure;
 import com.bbd.service.FavoriteService;
 
+@Service
 public class FavoriteServiceImpl implements FavoriteService {
 	@Autowired
 	FavoriteDao favoriteDao;

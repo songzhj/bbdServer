@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.TreasureService;
 import com.bbd.serviceImpl.TreasureServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -48,7 +50,10 @@ public class PublishTreasureAction extends HttpServlet {
 				.getBean("treasureServiceImpl");
 		String id = (String) request.getSession().getAttribute("id");
 		if (id == null) {
-			id = "null";
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
 		}
 		ArrayList<String> pics = treasureServiceImpl.getPics(id, request);
 		int isSuccess = treasureServiceImpl.publishTreasure(id, pics, request);
@@ -59,4 +64,11 @@ public class PublishTreasureAction extends HttpServlet {
 		}
 	}
 
+	private void returnData(String data, HttpServletResponse response)
+			throws IOException {
+		Writer out = response.getWriter();
+		out.write(data);
+		System.out.println(data);
+		out.close();
+	}	
 }

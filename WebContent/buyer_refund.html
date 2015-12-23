@@ -5,11 +5,9 @@
 	<title>百宝袋</title>
 	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
-	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
-	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+	<script src="tools/jquery.min.js"></script>
 	<script type="text/javascript" src="append_order.js"></script>
 	<script type="text/javascript" src="tools/bootstrap.min.js"></script>
-	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div classs="container">
@@ -82,6 +80,9 @@
 				data: {"state":state},
 				dataType : "json",
 				success : function(data) {
+					if (data.user_id == "null") {
+						location.href = "login.html";
+					}
 					$(data.orders).each(function() {
 						appendOrderCustomer(pic_url + this.pic, this.t_name, "url", this.price, this.num, this.state);
 					});

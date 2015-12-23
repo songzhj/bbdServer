@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.BuyerService;
 import com.bbd.serviceImpl.BuyerServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -47,7 +49,12 @@ public class BookingAction extends HttpServlet {
 				.getBean("buyerServiceImpl");
 		String data = request.getParameter("data");
 		String id = (String) request.getSession().getAttribute("id");
-		if (id == null) id = "null";
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		int isSuccess = buyerServiceImpl.booking(data, id);
 		returnData(isSuccess + "", response);
 	}

@@ -59,11 +59,11 @@
 			<if test="id != null">
 				ID = #{id,jdbcType=VARCHAR},
 			</if>
-			<if test="treasure_id != null">
+			<if test="treasureId != null">
 				TREASURE_ID = #{treasureId,jdbcType=VARCHAR},
 			</if>
-			<if test="treasure_num != null">
-				TREASURE_NUM = #{treasureNum,jdbcType=NUMBER}
+			<if test="treasureNum != null">
+				TREASURE_NUM = #{treasureNum,jdbcType=DECIMAL}
 			</if>
 		</set>
 		where ID = #{id,jdbcType=VARCHAR} and TREASURE_ID =

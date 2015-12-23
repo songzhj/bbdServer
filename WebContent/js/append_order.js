@@ -218,4 +218,40 @@
 		$(pic).attr("src",src);
 		$(url).attr("href",href);
 	}
+	/* 改变数量*/
+	function add(){
+		var num=$("#num").val();
+		$("#num").attr("value",parseInt(num)+1);
+	}
+	function del(){
+		var num=$("#num").val();
+		if(parseInt(num)>1){
+			$("#num").attr("value",parseInt(num)-1);
+		}
+	}
 
+	/*添加选项*/
+	function appendRadio(classname, name){		//classname{size|color}选择添加颜色或者尺码选项，name radio中的name值
+		var str="<input type='radio' name='"+ classname +"' value='"+ name + "'><span>"+ name + "</span>";
+		if(classname=="size"){
+			$("#size").append(str);
+		}else if(classname=="color"){
+			$("#color").append(str);
+		}
+
+	}
+	
+	/*添加图片*/
+	function addPic(url) {
+		$("#pic_group").append("<img src='" + url + "'><br><br>");
+	}
+	/*添加已存在的收货地址*/
+	function apendAddress (aid, name) { //地址名称
+		var str="<tr class='info'>"+
+		"<td class='col-lg-10 col-md-10'>" +name+"</td>"+
+		"<td class='col-lg-2 col-md-2'>"+
+		"<button class='r_button' onclick='deleteAddress()' id='"+ aid +"'>删除</button>"+
+		"</td>"+
+		"</tr>";
+		$("#address_table").append(str);
+	}

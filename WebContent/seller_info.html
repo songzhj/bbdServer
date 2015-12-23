@@ -127,6 +127,9 @@
 		    url:"http://bbd.songzhj.com/get_user_info_action",
 		    dataType:"json",
 		    success: function (data) {
+		    	if (data.user_id == "null") {
+					location.href = "login.html";
+				}
  		        $("#s_ID").val(data.id);
 		        $("#s_name").val(data.name);
 		        $("#s_birthday").val(data.birthday);

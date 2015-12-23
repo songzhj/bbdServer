@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import com.bbd.service.OrderService;
 import com.bbd.serviceImpl.OrderServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -48,6 +50,12 @@ public class HomeAction extends HttpServlet {
 				.getBean("orderServiceImpl");
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String userType = request.getParameter("user_type");
 		String data = orderServiceImpl.getOrderNumByType(id, userType );
 		returnData(data, response);

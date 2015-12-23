@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.OrderService;
 import com.bbd.serviceImpl.OrderServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -45,6 +47,13 @@ public class ChangeOrderStateAction extends HttpServlet {
 		
 		OrderService orderServiceImpl = (OrderServiceImpl) SpringContextUtil
 				.getBean("orderServiceImpl");
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String orderId = request.getParameter("order_id");
 		String state = request.getParameter("state");
 		String isSuccess = "" + orderServiceImpl.changeState(orderId, state);

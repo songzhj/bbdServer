@@ -1,7 +1,5 @@
 package com.bbd.serviceImpl;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,7 +7,6 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,9 +24,9 @@ import com.bbd.entity.Address;
 import com.bbd.entity.Buyer;
 import com.bbd.entity.Order;
 import com.bbd.entity.Seller;
+import com.bbd.entity.TIndex;
 import com.bbd.entity.Treasure;
 import com.bbd.service.BuyerService;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 @Service
 public class BuyerServiceImpl implements BuyerService {
@@ -102,8 +99,7 @@ public class BuyerServiceImpl implements BuyerService {
 
 	@Override
 	public int booking(String data, String id) {
-		JSONObject json = new JSONObject(data);
-		JSONArray arr = json.getJSONArray("data");
+		JSONArray arr = new JSONArray(data);
 		for (int i = 0; i < arr.length(); ++i) { // 一组订单
 			JSONObject jsonObj = (JSONObject) arr.get(i);
 			int r = booking(jsonObj, id);
@@ -138,7 +134,7 @@ public class BuyerServiceImpl implements BuyerService {
 	 */
 	private Order setOrder(JSONObject jsonObj, Order order, String id) {
 		order.setBuyerId(id);
-		order.settId(jsonObj.getString("t_id"));
+		order.settId(jsonObj.get("t_id").toString());
 		order.settNum(jsonObj.getBigDecimal("t_num"));
 		order.setAddrId(jsonObj.getString("addr_id"));
 		Treasure treasure = treasureDao.selectByPrimaryKey(order.gettId());
@@ -146,7 +142,7 @@ public class BuyerServiceImpl implements BuyerService {
 			return null;
 		order.setSellerId(treasure.getSellerId());
 		order.setprice(order.gettNum().doubleValue() * treasure.getPrice());
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		order.setMakeTime(Date.valueOf(f.format(Calendar.getInstance()
 				.getTime())));
 		order.setState("待付款");
@@ -192,11 +188,12 @@ public class BuyerServiceImpl implements BuyerService {
 	public int addAddress(HttpServletRequest request) {
 		try {
 			Address address = new Address();
-			address.setAddr(request.getParameter("province") + ","
-					+ request.getParameter("address") + ","
+			address.setAddr(request.getParameter("province") + "#"
+					+ request.getParameter("address") + "#"
 					+ request.getParameter("name"));
+			System.out.println(address.getAddr());
 			address.setPhone(request.getParameter("phone"));
-			address.setSellerId(request.getParameter("id"));
+			address.setSellerId((String) request.getSession().getAttribute("id"));
 			List<Address> list = addressDao.selectByBuyerId(address.getSellerId());
 			address.setAddrId(address.getSellerId() + list.size());
 			addressDao.insert(address);
@@ -238,7 +235,7 @@ public class BuyerServiceImpl implements BuyerService {
 			JSONObject o = new JSONObject();
 			o.put("addr_id", a.getAddrId());
 			o.put("phone", a.getPhone());
-			String[] pan = a.getAddr().split(",");
+			String[] pan = a.getAddr().split("#");
 			o.put("province", pan[0]);
 			o.put("address", pan[1]);
 			o.put("name", pan[2]);
@@ -255,9 +252,11 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public String getOrder(String userId, String state) {
 		List<Order> order = orderDao.selectByBuyerId(userId);
-		for (Order o : order) { //筛选非此状态的订单
-			if (!o.getState().equals(state)) {
-				order.remove(o);
+		System.out.println(state);
+		for (int i = 0; i < order.size(); ++i) {
+			if (!order.get(i).getState().equals(state)) {
+				System.out.println(order.get(i).getState());
+				order.remove(i);
 			}
 		}
 		JSONObject data = new JSONObject();
@@ -271,11 +270,24 @@ public class BuyerServiceImpl implements BuyerService {
 			json.put("t_num", o.gettNum());
 			json.put("price", o.getprice());
 			json.put("state", o.getState());
-			json.put("pic", tindexDao.selectById(o.getId()).getPicUrl());
+			TIndex index = tindexDao.selectById(o.getId());
+			String pic;
+			if (index == null) {
+				pic = "default.jpg";
+			} else {
+				pic = index.getPicUrl();
+			}
+			json.put("pic", pic);
 			arr.put(json);
 		}
 		data.put("orders", arr);
 		return data.toString();
+	}
+
+	@Override
+	public int delAddress(String aid) {
+		int a = addressDao.deleteByPrimaryKey(aid);
+		return a;
 	}
 
 }

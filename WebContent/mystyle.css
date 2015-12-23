@@ -242,22 +242,141 @@ li{
 /*
 .right{
 	margin-bottom: 50px;
-}*/
+	}*/
 
-.pay_login table{
-	width: 290px;
-	color: #797979;
-	text-align: center;
-	font-size: 130%;
-	margin: auto;
+	.pay_login table{
+		width: 290px;
+		color: #797979;
+		text-align: center;
+		font-size: 130%;
+		margin: auto;
+	}
+
+	.homepage_inner{
+		height:600px;
+	}
+	.customer_func{
+		font-size: 120%;
+		padding: 10px;
+		padding-left: 0px;
+		margin-bottom: 20px;
+	}
+
+	.selling_goods{
+		height: 350px;
+	}
+	.selling_goods img{
+	}
+	.price{
+		height: 100px;
+		margin-left: 40px;
+		background-color: #E8FEFE;
+	}
+	.selection {
+		margin-left: 40px;
+		margin-top: 30px;
+		font-size: 120%;
+		color:#797979;
+		height: 220px;
+	}
+	.selection div{
+		margin: 10px;
+	}
+	.price label{
+		font-size: 180%;
+		font-weight: bold;
+		color:#797979;
+		text-align: center;
+		margin: 20px; 
+		padding: 10px;
+	}
+	.price label span{
+		color: #fc0;
+		padding: 0px 10px;
+		font-size: 140%;
+		font-weight: bold;
+	}
+	.seller_info{
+		border: 1px solid #e4e4e4;
+		margin-left: 40px;
+		line-height: 3em;
+	}
+	.seller_info .title{
+		border: 0px;
+	}
+	#num{
+		width: 30px;
+		height: 28px;
+		text-align: right;
+	}
+	.operation #buy , .operation #add_cart{
+		margin-top: 30px;
+		height: 50px;
+		width: 120px;
+		margin: 10px;
+		font-weight: bold;
+	}
+	.operation #buy{
+		margin-left: 0px;
+		background-color: #DFFEFE;
+		color: #36f;
+	}
+	.operation #add_cart{
+		background-color: #36f;
+		color: #fff;
+	}
+	.add_fav{
+		margin-top: 10px;
+	}
+	.particulars{
+		background-color: #f2f2f2;
+		margin: 10px;
+		padding: 20px;
+	}
+	#selling_goods_top{
+		padding: 40px 0px;
+		border-top:2px solid #e4e4e4;
+		border-bottom:2px solid #e4e4e4;
+		overflow: hidden;
+	}
+	.captain{
+		margin: 10px 0px;
+		padding: 10px;
+		text-align: center;
+		background-color: #36f;
+		color: #fff;
+		font-weight: bold;
+		font-size: 130%;
+	}
+
+
+
+
+
+
+
+/* add by DF*/
+.num_button{
+	width: 25px;
+}
+.num_text{
+	width: 30px;
+}
+.tail_box{
+
+	margin: 20px 5px;
+	background-color: #DFDFDF;
+	padding: 5px 10px;
+
+
+}
+.tail_box_button{
+	margin-right: 10px;
 }
 
-.homepage_inner{
-			height:600px;
+.content_bg{
+	
+	margin-left: 50px;
+	margin-right: 50px;
+
 }
-.customer_func{
-			font-size: 120%;
-			padding: 10px;
-			padding-left: 0px;
-			margin-bottom: 20px;
-		}

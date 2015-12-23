@@ -112,6 +112,9 @@
 					url : "http://bbd.songzhj.com/get_treasure_action",
 					dataType : "json",
 					success : function(data) {
+						if (data.user_id == "null") {
+							location.href = "login.html";
+						}
 						$(data.treasures).each(function() {
 							appendText(pic_url + this.t_pic, this.name, url + this.t_id, this.price, this.num, "下架", this.t_id);
 						});

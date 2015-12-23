@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 import com.bbd.service.BuyerService;
@@ -43,9 +45,15 @@ public class GetOrderAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String state = request.getParameter("order_state");
+		String state = request.getParameter("state");
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("id");
+		if (userId == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String userType = (String) session.getAttribute("userType");
 		switch (userType) {
 		case "buyer":

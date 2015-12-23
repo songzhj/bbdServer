@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.BuyerService;
 import com.bbd.service.SellerService;
 import com.bbd.serviceImpl.BuyerServiceImpl;
@@ -40,8 +42,14 @@ public class ChangePwdAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String userType = (String)request.getSession().getAttribute("userType");
-		if (userType == null) userType = "null";
 		switch (userType) {
 		case "buyer":
 			changeBuyerPwd(request, response);

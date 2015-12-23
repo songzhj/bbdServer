@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.CartService;
 import com.bbd.serviceImpl.CartServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -45,7 +47,13 @@ public class GetCartAction extends HttpServlet {
 
 		CartService cartServiceImpl = (CartServiceImpl) SpringContextUtil
 				.getBean("cartServiceImpl");
-		String id = request.getParameter("id");
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String data = cartServiceImpl.getCarts(id);
 		returnData(data, response);
 	}

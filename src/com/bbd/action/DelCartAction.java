@@ -46,7 +46,7 @@ public class DelCartAction extends HttpServlet {
 		CartService cartServiceImpl = (CartServiceImpl) SpringContextUtil
 				.getBean("cartServiceImpl");
 		String tId = request.getParameter("t_id");
-		String uId = request.getParameter("u_id");
+		String uId = (String) request.getSession().getAttribute("id");
 		String isSuccess = "" + cartServiceImpl.del(tId, uId);
 		returnData(isSuccess, response);
 	}

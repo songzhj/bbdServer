@@ -46,7 +46,7 @@ public class DelFavoriteAction extends HttpServlet {
 		FavoriteService favoriteServiceImpl = (FavoriteServiceImpl) SpringContextUtil
 				.getBean("favoriteServiceImpl");
 		String tId = request.getParameter("t_id");
-		String uId = request.getParameter("u_id");
+		String uId = (String) request.getSession().getAttribute("id");
 		String isSuccess = "" + favoriteServiceImpl.del(tId, uId);
 		returnData(isSuccess, response);
 	}

@@ -25,7 +25,7 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public int retrievePassword(String id, String email) throws AddressException, MessagingException {
 		Buyer buyer = buyerDao.selectBuyerByPrimary(id);
-		Seller seller = sellerDao.selectForCode(id);
+		Seller seller = sellerDao.selectSellerByPrimary(id);
 		if (buyer == null && seller == null) return 0;
 		if (buyer != null) {
 			if (buyer.getEmail().equals(email)) {

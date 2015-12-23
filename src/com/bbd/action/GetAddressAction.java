@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.BuyerService;
 import com.bbd.serviceImpl.BuyerServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -47,7 +49,13 @@ public class GetAddressAction extends HttpServlet {
 
 		BuyerService buyerService = (BuyerServiceImpl) SpringContextUtil
 				.getBean("buyerServiceImpl");
-		String id = request.getParameter("id");
+		String id = (String) request.getSession().getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String data = buyerService.getAddress(id);
 		returnData(data, response);
 	}

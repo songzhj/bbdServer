@@ -30,7 +30,7 @@
 								<div
 									class="col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1 customer_func">
 									<span class="col-lg-4"><a href="buyer_address.html">收货地址</a></span>
-									<span class="col-lg-4"><a href="buyer_cart.html">购物车</a></span>
+									<span class="col-lg-4"><a href="" onclick="alert('开发中,没时间了,要复习,假期再说.');">购物车</a></span>
 									<span class="col-lg-4"><a href="buyer_favorite.html">收藏夹</a></span>
 								</div>
 							</div>
@@ -45,7 +45,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<a href="buyer_cart.html">
+								<a href="" onclick="alert('开发中,没时间了,要复习,假期再说.');">
 									<div
 										class="col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1 box">
 										<img src="pic/shapping.png" alt="购物车" />购物车
@@ -89,7 +89,10 @@
 					user_type : "buyer"
 				},
 				dataType : "json",
-				success : function(data) {
+				success : function(data) {		
+					if (data.user_id == "null") {
+						location.href = "login.html";
+					}
 					$("#name").html(data.user_id);
 					$("#span1").html(data.wait_pay);
 					$("#span2").html(data.wait_out);

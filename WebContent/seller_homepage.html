@@ -69,6 +69,9 @@
 		    data:{user_type:"seller"},
 		    dataType:"json",
 		    success: function (data) {
+				if (data.user_id == "null") {
+					location.href = "login.html";
+				}
  		        $("#span1").html(data.wait_pay);
 		        $("#span2").html(data.wait_out);
 		        $("#span3").html(data.already_out);

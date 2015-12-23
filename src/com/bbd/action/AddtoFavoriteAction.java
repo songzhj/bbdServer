@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.bbd.service.FavoriteService;
 import com.bbd.serviceImpl.FavoriteServiceImpl;
 import com.bbd.util.SpringContextUtil;
@@ -46,7 +48,13 @@ public class AddtoFavoriteAction extends HttpServlet {
 		FavoriteService favoriteServiceImpl = (FavoriteServiceImpl) SpringContextUtil
 				.getBean("favoriteServiceImpl");
 		String tId = request.getParameter("t_id");
-		String uId = request.getParameter("u_id");
+		String uId = (String) request.getSession().getAttribute("id");
+		if (uId == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String isSuccess = "" + favoriteServiceImpl.add(tId, uId);
 		returnData(isSuccess, response);
 	}

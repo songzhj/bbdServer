@@ -20,7 +20,7 @@
 		
 		<div class="container">
 			<div class="content col-md-12 col-lg-12">
-				<div id="myCarousel" class="carousel slide">
+				<div id="myCarousel" class="carousel slide" data-interval="3000">
 					<!-- 轮播（Carousel）指标 -->
 					<ol class="carousel-indicators">
 						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -29,7 +29,7 @@
 						<li data-target="#myCarousel" data-slide-to="3"></li>
 					</ol>   
 					<!-- 轮播（Carousel）项目 -->
-					<div class="carousel-inner homepage_inner">
+					<div class="carousel-inner homepage_inner" >
 						<div class="item active first">
 							<a href=""><img src="" ></a>
 						</div>
@@ -58,12 +58,10 @@
 	<script type="text/javascript" src="js/append_order.js"></script>
 	<script type="text/javascript">
 	$(".header").load("head.html");
-	$(document).ready(function() {
-		changeInner(".first","http://bbd.songzhj.com/pic/12.jpg","");
-		changeInner(".second","http://bbd.songzhj.com/pic/9.jpg","");
-		changeInner(".third","http://bbd.songzhj.com/pic/10.jpg","");
-		changeInner(".fourth","http://bbd.songzhj.com/pic/5.jpg","");
-	})
+	changeInner(".first","pic/9.jpg","");
+	changeInner(".second","pic/6.jpg","");				
+	changeInner(".third","pic/5.jpg","");				
+	changeInner(".fourth","pic/12.jpg","");				
 	</script>
 </body>
 </html>

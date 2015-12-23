@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>searchPassword</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<header>
+			<!--页头-->
+			<div class="page-header">
+
+				<h2 class="text-muted">
+					<a href="#"><img src="pic/logo.png"></a>找回密码
+				</h2>
+				<h3 class="text-info">&nbsp&nbsp&nbspbaibaodai.com</h3>
+			</div>
+		</header>
+	</div>
+	<!--表单-->
+	</br>
+	</br>
+	</br>
+	</br>
+	<div class="container">
+		<form class="form-horizontal" awction="" method="">
+			<div class="form-group">
+				<label for="inputUsername" class="col-sm-4 control-label">用户名：</label>
+				<div class="col-sm-3">
+					<input type="name" class="form-control require" id="inputUsername"
+						placeholder="输入用户名">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail" class="col-sm-4 control-label">请输入注册邮箱</label>
+				<div class="col-sm-3">
+					<input type="email" class="form-control require" id="inputEmail"
+						placeholder="请输入邮箱">
+				</div>
+			</div>
+
+			</br> </br>
+			<div class="form-group">
+				<div class="col-sm-3 col-sm-offset-4">
+					<input id="send" type="button" class="btn btn-primary "
+						value="发送邮件">
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<script type="text/javascript" src="tools/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#send").click(function() {
+				var id = $("#inputUsername").val();
+				var email = $("#inputEmail").val();
+				$.ajax({
+					type : 'POST',
+					url : "http://bbd.songzhj.com/retrieve_password_action",
+					data:{"id":id, "email":email},
+					dataType : "text",
+					success : function(data) {
+						if (data == 1) {
+							alert("密码正发往您的邮箱,快去看看吧.");
+						} else if (data == 2){
+							alert("邮箱错误.");
+						} else {
+							alert("该用户不存在.");
+						}
+					},
+					error : function(XMLHttpRequest,textStatus,errorThrown) {
+						alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+					}
+				});
+			});
+		});
+	</script>
+
+</body>
+</html>

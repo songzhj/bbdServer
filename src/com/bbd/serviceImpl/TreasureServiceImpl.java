@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.bbd.dao.SellerDao;
 import com.bbd.dao.TIndexDao;
 import com.bbd.dao.TPicDao;
 import com.bbd.dao.TreasureDao;
@@ -40,6 +40,8 @@ public class TreasureServiceImpl implements TreasureService {
 	TIndexDao tIndexDao;
 	@Autowired
 	TPicDao tPicDao;
+	@Autowired
+	SellerDao sellerDao;
 
 	@Override
 	public int publishTreasure(String id, ArrayList<String> pics, HttpServletRequest request) {
@@ -140,9 +142,9 @@ public class TreasureServiceImpl implements TreasureService {
 		}
 		List<TIndex> index = tIndexDao.selectByName(conditions[0]);
 		for (int i = 1; i < conditions.length; ++i) {
-			for (TIndex t : index) {
-				if (t.gettName().indexOf(conditions[i]) == -1) {
-					index.remove(t);
+			for (int j = 0; j < index.size(); ++j) {
+				if (index.get(j).gettName().indexOf(conditions[i]) == -1) {
+					index.remove(j);
 				}
 			}
 		}
@@ -153,6 +155,10 @@ public class TreasureServiceImpl implements TreasureService {
 	public String getDetails(String id) {
 		Treasure treasure = treasureDao.selectByPrimaryKey(id);
 		JSONObject data = new JSONObject();
+		if (treasure == null) {
+			data.put("state", "empty");
+			return data.toString();
+		}
 		data = getTreasureDetails(treasure, data);
 		List<TPic> pics = tPicDao.selectByTId(treasure.getId());
 		data.put("pic", getTreasurePictures(pics));
@@ -172,10 +178,12 @@ public class TreasureServiceImpl implements TreasureService {
 		data.put("name", treasure.getName());
 		data.put("price", treasure.getPrice());
 		data.put("seller_id", treasure.getSellerId());
+		data.put("phone", sellerDao.selectSellerByPrimary(treasure.getSellerId()).getPhone());
 		data.put("sex", treasure.getSex());
 		data.put("num", treasure.getNum());
 		data.put("describe", treasure.getDescribe());
-		data.put("brand", getJsonArr(treasure.getBrand()));
+		System.out.println(treasure.getDescribe());
+		data.put("brand", treasure.getBrand());
 		data.put("color", getJsonArr(treasure.getColor()));
 		data.put("size", getJsonArr(treasure.getSize()));
 		return data;

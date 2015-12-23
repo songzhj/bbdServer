@@ -15,33 +15,42 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/get_user_type")
 public class GetUserType extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GetUserType() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public GetUserType() {
+		super();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
 		String userType = (String) request.getSession().getAttribute("userType");
-		if (userType == null) userType = "null";
+		if (userType == null) {
+			returnData("null" , response);
+			return;
+		}
 		returnData(userType, response);
 	}
-	
+
 	private void returnData(String data, HttpServletResponse response)
 			throws IOException {
 		Writer out = response.getWriter();
 		out.write(data);
+		System.out.println(data);
 		out.close();
 	}
 }

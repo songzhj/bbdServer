@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bbd.dao.CartDao;
 import com.bbd.dao.TreasureDao;
@@ -13,6 +14,7 @@ import com.bbd.entity.Cart;
 import com.bbd.entity.Treasure;
 import com.bbd.service.CartService;
 
+@Service
 public class CartServiceImpl implements CartService {
 	@Autowired
 	CartDao cartDao;

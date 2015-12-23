@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import com.bbd.service.BuyerService;
 import com.bbd.service.SellerService;
 import com.bbd.serviceImpl.BuyerServiceImpl;
@@ -47,6 +49,13 @@ public class GetUserInfoAction extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		if (id == null) {
+			JSONObject json = new JSONObject();
+			json.put("user_id", "null");
+			returnData(json.toString(), response);
+			return;
+		}
 		String userType = (String) session.getAttribute("userType");
 		if (userType == null) return;
 		switch (userType) {

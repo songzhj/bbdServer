@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>moneyCount</title>
+	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+<body>
+	<div class="header"></div>
+	<div class="content">
+		<div class="container">
+			<div>
+				<p class="right_top">
+					<span>确认收货地址</span>
+				</p>
+			</div>
+			<div class="addr_list">
+				<!--添加收货地址-->
+			</div>
+			<br><br><br><br>
+			<div>
+				<p class="right_top">
+					<span>确认订单信息</span>
+				</p>
+			</div>
+
+			<div class="row" id="row_title">
+				<span class="col-lg-3">宝贝</span>
+				<span class="col-lg-3">宝贝属性</span>
+				<span class="col-lg-2">单价</span>
+				<span class="col-lg-2">数量</span>
+				<span class="col-lg-2">总价</span>
+			</div>
+			<div class="list">
+				<!-- 添加货物信息 -->
+			</div>
+			<!--提交尾巴-->	
+			<div class="tail_box">
+				<button class="btn btn-primary" id="booking">提交订单</button>
+			</div>		
+		</div>
+	</div>
+
+	<script type="text/javascript" src="tools/jquery.min.js"></script>
+	<script type="text/javascript" src="js/UrlParam.js"></script>
+	<script type="text/javascript">
+		//头
+		$(".header").load("head.html");
+		//添加货物信息	
+		function appendText(goodname,url,unitPrice,totalPrice,num,goodnature) {
+			var myTreasure = 
+			"<div class='row goods_item'>"+
+			"<span class='col-lg-3 goods_name'> "+
+			"<a href='"+url+"'>"+goodname+"</a>"+
+			"</span>"+
+			"<span class='col-lg-3'>"+goodnature+"</span>"+
+			"<span class='col-lg-2'>"+unitPrice+"</span>"+
+			"<span class='col-lg-2'>"+num+"</span>"+
+			"<span class='col-lg-2'>"+totalPrice+"</span>"+
+			"</div>";
+			$(".list").append(myTreasure);
+		}
+		//添加收货地址	
+		function appendAddr(addrid,addrvalue,addrtext){
+			var myAddr=
+			"<div class='radio'>"+
+			"<label>"+
+			"<input type='radio' name='addrRadios' id='"+addrid+"' value='"+addrvalue+"'>"+addrtext+
+			"</label>"+
+			"</div>";
+			$(".addr_list").append(myAddr);
+		}
+		$(document).ready(function() {
+			var tid = getUrlParam("tid");
+			var num = getUrlParam("num");
+			var nature = getUrlParam("nature");
+			$.ajax({
+				type : 'POST',
+				url : "http://bbd.songzhj.com/get_address_action",
+				dataType : "json",
+				success : function(data) {
+					$(data.addresses).each(function() {
+						appendAddr(this.addr_id, this.addr_id, this.province + this.address + " " + this.name + " " + this.phone);
+					});
+				},
+				error : function(XMLHttpRequest,textStatus,errorThrown) {
+					alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+				}
+			});
+			$.ajax({
+				type : 'POST',
+				url : "http://bbd.songzhj.com/treasure_details_action",
+				data:{"tid":tid},
+				dataType : "json",
+				success : function(data) {
+					appendText(data.name, "http://bbd.songzhj.com/details.html?tid=" + data.id, data.price, data.price * num, num, decodeURI(nature));
+				},
+				error : function(XMLHttpRequest,textStatus,errorThrown) {
+					alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+				}
+			});
+			
+			$("#booking").click(function() {
+				var addr = $("input:radio[name='addrRadios']:checked").val();
+				var tid = getUrlParam("tid");
+				var num = getUrlParam("num");
+				$.ajax({
+					type : 'POST',
+					url : "http://bbd.songzhj.com/booking_action",
+					data: {"data":"[{'t_id':" + tid + ", 't_num':" + num + ", 'addr_id':" + addr + "}]"},
+					dataType : "text",
+					success : function(data) {
+						if (data == 1) {
+							location.href = "buyer_waitpay.html";
+						} else {
+							alert("服务器繁忙,请稍候再试.");
+						}
+					},
+					error : function(XMLHttpRequest,textStatus,errorThrown) {
+						alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

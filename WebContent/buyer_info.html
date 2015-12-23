@@ -23,6 +23,9 @@
 			url : "http://bbd.songzhj.com/get_user_info_action",
 			dataType : "json",
 			success : function(data) {
+				if (data.user_id == "null") {
+					location.href = "login.html";
+				}
 				$("#b_ID").val(data.id);
 				$("#b_name").val(data.name);
 				$("#b_birthday").val(data.birthday);

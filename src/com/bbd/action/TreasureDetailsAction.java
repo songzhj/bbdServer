@@ -36,7 +36,7 @@ public class TreasureDetailsAction extends HttpServlet {
 
 		TreasureService treasureServiceImpl = (TreasureServiceImpl) SpringContextUtil
 				.getBean("treasureServiceImpl");
-		String id = request.getParameter("id");
+		String id = request.getParameter("tid");
 		String data = treasureServiceImpl.getDetails(id);
 		returnData(data, response);
 	}
@@ -44,6 +44,7 @@ public class TreasureDetailsAction extends HttpServlet {
 	private void returnData(String data, HttpServletResponse response) throws IOException {
 		Writer out = response.getWriter();
 		out.write(data);
+		System.out.println(data);
 		out.close();
 	}
 

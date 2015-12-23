@@ -46,7 +46,7 @@ public class EditCartAction extends HttpServlet {
 		CartService cartServiceImpl = (CartServiceImpl) SpringContextUtil
 				.getBean("cartServiceImpl");
 		String tId = request.getParameter("t_id");
-		String uId = request.getParameter("u_id");
+		String uId = (String) request.getSession().getAttribute("id");
 		String num = request.getParameter("num");
 		String isSuccess = "" + cartServiceImpl.editNum(tId, uId, num);
 		returnData(isSuccess, response);
