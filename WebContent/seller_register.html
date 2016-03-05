@@ -184,45 +184,55 @@
 	<script type="text/javascript" src="js/formTest.js"></script>
 
 	<script type="text/javascript">
+	
+			function sendR() {
+				var userType = "seller";
+				var email = $("#inputEmail")
+						.val();
+				var code = $("#validate").val();
+				var id = $("#inputUsername")
+						.val();
+				var pwd = $("#inputPassword")
+						.val();
+				var name = $("#realName").val();
+				var birthday = $("#birthday")
+						.val();
+				var sex = $(
+						"input:radio[name='choosesex']:checked")
+						.val();
+				var idCard = $("#idcardNum")
+						.val();
+				var phone = $("#phoneNum")
+						.val();
+
+				var url = "http://bbd.songzhj.com/register_action?";
+				url += "user_type=" + userType
+						+ "&email=" + email
+						+ "&id=" + id + "&pwd="
+						+ pwd + "&code=" + code
+						+ "&name=" + name
+						+ "&sex=" + sex
+						+ "&birthday="
+						+ birthday + "&phone="
+						+ phone + "&id_card="
+						+ idCard;
+				document.form2.action = url;
+				document.form2.submit();
+			}
+	
 		$(document)
 				.ready(
 						function() {
-							$("#nextStep")
-									.click(
-											function() {
-												var userType = "seller";
-												var email = $("#inputEmail")
-														.val();
-												var code = $("#validate").val();
-												var id = $("#inputUsername")
-														.val();
-												var pwd = $("#inputPassword")
-														.val();
-												var name = $("#realName").val();
-												var birthday = $("#birthday")
-														.val();
-												var sex = $(
-														"input:radio[name='choosesex']:checked")
-														.val();
-												var idCard = $("#idcardNum")
-														.val();
-												var phone = $("#phoneNum")
-														.val();
-
-												var url = "http://bbd.songzhj.com/register_action?";
-												url += "user_type=" + userType
-														+ "&email=" + email
-														+ "&id=" + id + "&pwd="
-														+ pwd + "&code=" + code
-														+ "&name=" + name
-														+ "&sex=" + sex
-														+ "&birthday="
-														+ birthday + "&phone="
-														+ phone + "&id_card="
-														+ idCard;
-												document.form2.action = url;
-												document.form2.submit();
-											});
+							
+							$('#nextStep').click(function(){
+								  $("form .require:input").trigger('blur');
+								  var numError = $('form .onError').length;
+								  if(numError){
+								    alert("请按提示正确填写表单后再进行下一步");
+								    return false;
+								  }
+								  sendR();
+								});
 
 							$("#sendCode")
 									.click(

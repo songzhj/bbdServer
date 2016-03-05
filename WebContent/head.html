@@ -1,130 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="mystyle.css">
-	
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document</title>
+<link rel="stylesheet" type="text/css" href="tools/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+
 </head>
 <body>
 	<div class="container">
 		<!--导航-->
 		<div class="navbar-wrapper">
 			<div class="container">
-				<nav class="navbar navbar-default navbar-fixed-top " id="top" role="navigation" >
+				<nav class="navbar navbar-default navbar-fixed-top " id="top"
+					role="navigation">
 					<div class="container">
 						<div class="navbar-header">
 							<a class="navbar-brand" href="#">欢迎来到百宝袋！</a>
 						</div>
-						
+
 						<div class="navbar-right">
 							<ul class="nav navbar-nav" id="someapp">
-								
-								<li><a data-toggle="modal" href="http://bbd.songzhj.com/register.html" id="login">注册</a></li>
-								<li><a data-toggle="modal" href="http://bbd.songzhj.com/login.html" id="register">登录</a></li>
+
+								<li><a data-toggle="modal"
+									href="http://bbd.songzhj.com/register.html" id="login">注册</a></li>
+								<li><a data-toggle="modal"
+									href="http://bbd.songzhj.com/login.html" id="register">登录</a></li>
 								<li><a onclick="toHome()" data-toggle="modal" id="home">我的主页</a></li>
 							</ul>
 						</div>
-						
 					</div>
 				</nav>
-				
 
-			
-		</div>
-		<!-- logo和搜索框 -->
-		<div class="container logo_search">
-			
+			</div>
+			<!-- logo和搜索框 -->
+			<div class="container logo_search">
+
 				<div class="row">
-					<div class="col-md-3 col-lg-3 logo" >
-						<img class="img-responsive" src="pic/logo.png" >
-						<span ><a id="log_link" href="homepage.html">bbd.songzhj.com</a></span>
+					<div class="col-md-3 col-lg-3 logo">
+						<img class="img-responsive" src="pic/logo.png"> <span><a
+							id="log_link" href="homepage.html">bbd.songzhj.com</a></span>
 					</div>
 				</div>
-				
-			
-			<div class="search">
+
+
+				<div class="search">
 					<div class="col-md-7 col-md-offset-3 col-lg-7 col-lg-offset-3">
 						<div class="input-group">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" id="inputSearch">
 							<span class="input-group-btn">
-								<button class="btn btn-default search_button" type="button">
-									搜索
-								</button>
+								<button class="btn btn-default search_button" type="button"
+									onclick="doSearch()">搜索</button>
 							</span>
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-			</div>	
-			<div class="pull-right" id="download" >
-					<div  >
-						<img id="download_pic" src="pic/1.jpg" alt="移动客户端下载" >
+						</div>
+						<!-- /input-group -->
+					</div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<div class="pull-right" id="download">
+					<div>
+						<img id="download_pic" src="pic/1.jpg" alt="移动客户端下载">
 					</div>
 					<div id="download_link">
 						<a href="">移动客户端下载</a>
 					</div>
-				</div>		
+				</div>
+			</div>
 		</div>
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$
+										.ajax({
+											type : 'POST',
+											url : "http://bbd.songzhj.com/index_action",
+											dataType : "text",
+											success : function(data) {
+												if (data != "null") {
+													$("#register").remove();
+													$("#login").remove();
+													$("#home").remove();
+													$("#someapp")
+															.append(
+																	"<li><a data-toggle='modal'><span id='name'>"
+																			+ "欢迎，"
+																			+ data
+																			+ "</span></a></li>");
+													$("#someapp")
+															.append(
+																	"<li><a data-toggle='modal' onclick='logout()'>注销</a></li>");
+													$("#someapp")
+															.append(
+																	"<li><a onclick='toHome()' data-toggle='modal' id='home'>我的主页</a></li>")
+												}
+												/* 	    		$("#register").html("");
+												 $("#login").html("");
+												 $("#name").html("欢迎，" + "丁宝宝"); */
+											},
+											error : function() {
+												alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+											}
+										});
+							});
+			function toHome() {
+				$
+						.ajax({
+							type : 'POST',
+							url : "http://bbd.songzhj.com/get_user_type",
+							dataType : "text",
+							success : function(data) {
+
+								if (data == "buyer") {
+									location.href = "http://bbd.songzhj.com/buyer_homepage.html";
+								} else if (data == "seller") {
+									location.href = "http://bbd.songzhj.com/seller_homepage.html";
+								} else if (data == "null") {
+									location.href = "login.html";
+								}
+							},
+							error : function() {
+								alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+							}
+						});
+			}
+			function logout() {
+				$.ajax({
+					type : 'POST',
+					url : "http://bbd.songzhj.com/logout_action",
+					dataType : "text",
+					success : function(data) {
+						location.href = "homepage.html";
+					},
+					error : function() {
+						alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+					}
+				});
+			}
+			function doSearch() {
+				var name = $("#inputSearch").val();
+				if (name == "") {
+					alert("请输入搜索内容.");
+					return;
+				}
+				var url = "search_result.html?search_name="
+						+ encodeURI(encodeURI(name));
+				location.href = url;
+			}
+		</script>
 	</div>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$.ajax({
-		    type:'POST',
-		    url:"http://bbd.songzhj.com/index_action",
-		    dataType:"text",
-		    success: function (data) {
-		    	if (data != "null") {
-		    		$("#register").remove();
-		    		$("#login").remove();
-		    		$("#home").remove();
-		    		$("#someapp").append("<li><a data-toggle='modal'><span id='name'>" + "欢迎，" + data + "</span></a></li>");
-		    		$("#someapp").append("<li><a data-toggle='modal' onclick='logout()'>注销</a></li>");
-		    		$("#someapp").append("<li><a onclick='toHome()' data-toggle='modal' id='home'>我的主页</a></li>")
-		    	}
-/* 	    		$("#register").html("");
-	    		$("#login").html("");
-		    	$("#name").html("欢迎，" + "丁宝宝"); */
-		    },
-		    error:function() {
-		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
-		    }
-		});
-	});
-	function toHome() {
-			$.ajax({
-			    type:'POST',
-			    url:"http://bbd.songzhj.com/get_user_type",
-			    dataType:"text",
-			    success: function (data) {
-			    	
-			    	if (data == "buyer") {
-			    		location.href = "http://bbd.songzhj.com/buyer_homepage.html";
-			    	} else if (data == "seller") {
-			    		location.href = "http://bbd.songzhj.com/seller_homepage.html";
-			    	} else if (data == "null") {
-			    		location.href = "login.html";
-			    	}
-			    },
-			    error:function() {
-			    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
-			    }
-			});
-	}
-	function logout() {
-		$.ajax({
-		    type:'POST',
-		    url:"http://bbd.songzhj.com/logout_action",
-		    dataType:"text",
-		    success: function (data) {
-		    	location.href = "homepage.html";
-		    },
-		    error:function() {
-		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
-		    }
-		});
-	}
-	</script>
-</div>
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title_name>百宝袋</title_name>
+<style type="text/css">
+
+body{padding:0;margin:0;background:#ddd repeat;}
+img{border:none;}
+a{text-decoration:none;color:#444;}
+a:hover{color:#999;}
+
+@-webkit-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@-moz-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@-ms-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@-o-keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+@keyframes shade{
+	from{opacity:1;}
+	15%{opacity:0.4;}
+	to{opacity:1;}
+}
+/* wrap */
+#wrap{width:50%;height:auto;margin:300px auto;position:relative;}
+#wrap .box{width:250px;height:270px;padding:10px;border:none;float:left;margin:10px;}
+#wrap .box .info{width:250px;height:270px;border-radius:8px;box-shadow:0 0 11px #666;background:#fff;}
+#wrap .box .info .pic{width:230px;height:190px;margin:0 auto;padding-top:10px;}
+#wrap .box .info .pic:hover{
+	-webkit-animation:shade 3s ease-in-out 1;
+	-moz-animation:shade 3s ease-in-out 1;
+	-ms-animation:shade 3s ease-in-out 1;
+	-o-animation:shade 3s ease-in-out 1;
+	animation:shade 3s ease-in-out 1;
+}
+#wrap .box .info .pic img{width:230px;height:190px;border-radius:3px;}
+#wrap .box .info .title_name{width:230px;height:80px;margin:12px 3px auto auto;line-height:20px;text-align:center;color:#666;font-size:14px;font-weight:bold;overflow:hidden;}
+</style>
+
+
+</head>
+<body>
+	<div class="header"></div>
+	<div id="wrap">
+	
+	</div>
+	<script type="text/javascript" src="js/UrlParam.js"></script>
+	<script type="text/javascript" src="tools/jquery.min.js"></script>
+	<script type="text/javascript">
+		function appendItem (pic_url, url, name) {
+			var context = "<a href='" + url + "'><div class='box'>" +
+						"<div class='info'>" +
+							"<div class='pic'><img src='" + pic_url + "''></div>" +
+							"<div class='title_name'>" + name + "</div>" +
+						"</div>" +
+					"</div></a>";
+			$("#wrap").append(context);
+		}
+		
+	$(document).ready(function () {
+		$(".header").load("head.html");
+		
+		var context = decodeURI(getUrlParam("search_name"));
+		$.ajax({
+			type : 'POST',
+			url : "http://bbd.songzhj.com/search_treasure_action",
+			data: {"context":context},
+			dataType : "json",
+			success : function(data) {
+				if (data.treasure == "") {
+					alert("没找到相关商品(请尝试简化搜索内容).")
+					return;
+				}
+				var url = "http://bbd.songzhj.com/details.html?tid=";
+				var pic = "http://bbd.songzhj.com:8800/";
+				$(data.treasure).each(function() {
+					appendItem(pic + this.t_index, url + this.id, this.name);
+				});
+			},
+			error : function(XMLHttpRequest,textStatus,errorThrown) {
+				alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+				alert(textStatus);
+			}
+		});	
+	});
+	</script>
+</body>
+</html>

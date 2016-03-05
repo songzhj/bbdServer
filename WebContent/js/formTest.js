@@ -101,16 +101,7 @@ $('form :input').blur(function(){
      $(this).triggerHandler("blur");
 });//end blur
 
-//提交验证
-$('#send').click(function(){
-  $("form .require:input").trigger('blur');
-  var numError = $('form .onError').length;
-  if(numError){
-    alert("请按提示正确填写表单后再进行下一步");
-    return false;
-    
-  }
-})
+
 
 
 
