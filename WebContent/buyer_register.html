@@ -88,7 +88,7 @@
 				<label for="inputConfirmPassword" class="col-sm-4 control-label">确认密码：</label>
 				<div class="col-sm-4">
 					<input type="password" class="form-control require"
-						id="inputConfirmPassword" placeholder="再次输入秘密">
+						id="inputConfirmPassword" placeholder="再次输入密码">
 				</div>
 			</div>
 			<!--真实姓名-->
@@ -137,38 +137,53 @@
 	<script type="text/javascript" src="js/formTest.js"></script>
 
 	<script type="text/javascript">
+	
+	function sendR() {
+		var userType = "buyer";
+		var email = $("#inputEmail").val();
+		var code = $("#validate").val();
+		var id = $("#inputUsername").val();
+		var pwd = $("#inputPassword").val();
+		var name = $("#realName").val();
+		var birthday = $("#birthday").val();
+		var sex = $("input:radio[name='choosesex']:checked").val();
+		$.ajax({
+		    type:'post',
+		    url:"http://bbd.songzhj.com/register_action",
+		    data:{"user_type":userType, "code":code, "id":id, "email":email, "pwd":pwd, "name":name, "birthday":birthday, "sex":sex},
+		    dataType:"text",
+		    success: function (data) {
+				if (data == 1) {
+					location.href = "buyer_register_success.html";
+				} else if (data == 2) {
+					alert("用户名已存在");
+				} else if (data == 3) {
+					alert("邮箱验证码错误!");
+				} else {
+					location.href = "error.html";
+					alert(data)
+				}
+		    },
+		    error:function() {
+		    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
+		    }
+		});
+	}
+	
+	
 		$(document).ready(function() {
-			$("#nextStep").click(function() {
-				var userType = "buyer";
-				var email = $("#inputEmail").val();
-				var code = $("#validate").val();
-				var id = $("#inputUsername").val();
-				var pwd = $("#inputPassword").val();
-				var name = $("#realName").val();
-				var birthday = $("#birthday").val();
-				var sex = $("input:radio[name='choosesex']:checked").val();
-				$.ajax({
-				    type:'post',
-				    url:"http://bbd.songzhj.com/register_action",
-				    data:{"user_type":userType, "code":code, "id":id, "email":email, "pwd":pwd, "name":name, "birthday":birthday, "sex":sex},
-				    dataType:"text",
-				    success: function (data) {
-						if (data == 1) {
-							location.href = "buyer_register_success.html";
-						} else if (data == 2) {
-							alert("用户名已存在");
-						} else if (data == 3) {
-							alert("邮箱验证码错误!");
-						} else {
-							location.href = "error.html";
-							alert(data)
-						}
-				    },
-				    error:function() {
-				    	alert("出错了,错误代码:error04.请叫苦逼的程序猿起床改bug.");
-				    }
-				});
+			
+			//提交验证
+			$('#nextStep').click(function(){
+			  $("form .require:input").trigger('blur');
+			  var numError = $('form .onError').length;
+			  if(numError){
+			    alert("请按提示正确填写表单后再进行下一步");
+			    return false;
+			  }
+			  sendR();
 			});
+			
 			$("#sendCode").click(function() {
 				var email = $("#inputEmail").val();
 				if (email == "") {

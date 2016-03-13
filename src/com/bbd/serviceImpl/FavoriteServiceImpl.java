@@ -56,10 +56,12 @@ public class FavoriteServiceImpl implements FavoriteService {
 		for (Favorite c : list) {
 			JSONObject o = new JSONObject();
 			Treasure treasure = treasureDao.selectByPrimaryKey(c.getTreasureId());
-			o.put("t_id", c.getTreasureId());
-			o.put("seller_id", treasure.getSellerId());
-			o.put("name", treasure.getName());
-			arr.put(o);
+			if (treasure != null) {
+				o.put("t_id", c.getTreasureId());
+				o.put("seller_id", treasure.getSellerId());
+				o.put("name", treasure.getName());
+				arr.put(o);
+			}
 		}
 		data.put("favorites", arr);
 		return data.toString();

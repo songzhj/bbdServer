@@ -118,6 +118,7 @@ public class TreasureServiceImpl implements TreasureService {
 		if (index == null)
 			return "0";
 		JSONObject data = treasureToJson(index);
+		System.out.println(data.toString());
 		return data.toString();
 	}
 
@@ -191,7 +192,7 @@ public class TreasureServiceImpl implements TreasureService {
 
 	private JSONArray getJsonArr(String string) {
 		JSONArray arr = new JSONArray();
-		String[] sp = string.split(",");
+		String[] sp = string.split(",|，");
 		for (String s : sp) {
 			arr.put(s);
 		}
