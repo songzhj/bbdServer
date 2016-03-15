@@ -8,7 +8,7 @@
   </resultMap>
   <sql id="all">t_id,t_name,pic_url</sql>
   <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
-  	select <include refid="all"/> from T_INDEX where upper(t_name) like '%'||upper(name)||'%'
+  	select <include refid="all"/> from T_INDEX where upper(t_name) like '%'||upper(#{tName})||'%'
   </select>
   <select id="selectById" parameterType="String" resultMap="BaseResultMap">
   	select <include refid="all"/> from T_INDEX where T_ID = #{id,jdbcType=VARCHAR}

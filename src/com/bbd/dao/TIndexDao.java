@@ -9,7 +9,7 @@ public interface TIndexDao {
 
     int insertSelective(TIndex record);
     
-    List<TIndex> selectByName(String name);
+    List<TIndex> selectByName(String tName);
     
     TIndex selectById(String id);
 
